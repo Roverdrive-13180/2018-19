@@ -101,7 +101,60 @@ public class RobotNavigator {
         Thread.sleep(time);
         stopMotor();
     }
+    public void shiftRightTime(double power, long time) throws InterruptedException {
+        shiftRight(power);
+        Thread.sleep(time);
+        stopMotor();
+    }
+    public void shiftLeftTime(double power, long time) throws InterruptedException {
+        shiftLeft(power);
+        Thread.sleep(time);
+        stopMotor();
+    }
 
+    /* Set poer to both top left and rear left motor */
+    public void  setLeftMotorPower(double power) {
+        topl.setPower(power);
+        rearl.setPower(power);
+    }
+
+    public void  setRightMotorPower(double power) {
+        topr.setPower(power);
+        rearr.setPower(power);
+    }
+
+    public boolean isRearLeftMotorBusy() {
+        return rearl.isBusy();
+    }
+
+    public boolean isRearRightMotorBusy() {
+        return rearr.isBusy();
+    }
+
+    public boolean isTopLeftMotorBusy() {
+        return topl.isBusy();
+    }
+
+    public boolean isTopRightMotorBusy() {
+        return topr.isBusy();
+    }
+
+    /* TODO: Test */
+    public void moveLeft (double power){
+        topl.setPower(power);
+        topr.setPower(-power);
+        //rearl.setPower(power);
+        //rearr.setPower(-power);
+    }
+
+    public void moveRight (double power){
+        topl.setPower(-power);
+        topr.setPower(power);
+        //rearl.setPower (-power);
+        //rearr.setPower(power);
+    }
+
+    // TODO : Check if we need this code
     public void setLeftMotorTargetPosition(int position) {
         //leftMotor.setTargetPosition(position);
         topl.setTargetPosition(position);
@@ -154,48 +207,6 @@ public class RobotNavigator {
         rearl.setDirection(DcMotor.Direction.FORWARD);
         topr.setDirection(DcMotor.Direction.FORWARD);
         rearr.setDirection(DcMotor.Direction.FORWARD);
-    }
-
-    /* Set poer to both top left and rear left motor */
-    public void  setLeftMotorPower(double power) {
-        topl.setPower(power);
-        rearl.setPower(power);
-    }
-
-    public void  setRightMotorPower(double power) {
-        topr.setPower(power);
-        rearr.setPower(power);
-    }
-
-    public boolean isRearLeftMotorBusy() {
-        return rearl.isBusy();
-    }
-
-    public boolean isRearRightMotorBusy() {
-        return rearr.isBusy();
-    }
-
-    public boolean isTopLeftMotorBusy() {
-        return topl.isBusy();
-    }
-
-    public boolean isTopRightMotorBusy() {
-        return topr.isBusy();
-    }
-
-    /* TODO: Test */
-    public void moveLeft (double power){
-        topl.setPower(power);
-        topr.setPower(-power);
-        //rearl.setPower(power);
-        //rearr.setPower(-power);
-    }
-
-    public void moveRight (double power){
-        topl.setPower(-power);
-        topr.setPower(power);
-        //rearl.setPower (-power);
-        //rearr.setPower(power);
     }
 
 }
