@@ -309,7 +309,6 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.update();
-
-        }
+                    }
     }
 }
