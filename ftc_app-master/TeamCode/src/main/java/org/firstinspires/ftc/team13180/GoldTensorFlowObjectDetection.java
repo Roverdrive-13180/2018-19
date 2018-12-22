@@ -111,6 +111,9 @@ public class GoldTensorFlowObjectDetection {
         }
     }
 
+    /**
+     *
+     */
     public String getGoldLocation() {
 
         if (tfod != null) {
@@ -224,3 +227,6 @@ public class GoldTensorFlowObjectDetection {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
 }
+
+
+
