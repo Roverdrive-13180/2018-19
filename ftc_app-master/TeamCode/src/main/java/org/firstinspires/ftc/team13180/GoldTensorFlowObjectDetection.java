@@ -182,12 +182,13 @@ public class GoldTensorFlowObjectDetection {
                     if(updatedRecognitions.get(0).getLabel().equals(LABEL_GOLD_MINERAL)) {
                         goldLocation = "Center";
                     }
-
-                    opMode.telemetry.addData("Result", "Objects=%d goldLocation=%s", updatedRecognitions.size(), goldLocation);
                 }
                 else {
-                    opMode.telemetry.addData("Error:", "Objects=%d", updatedRecognitions.size());
+                    opMode.telemetry.addData("Error (Not Found):", "Objects=%d", updatedRecognitions.size());
                 }
+
+                opMode.telemetry.addData("Result", "Objects=%d goldLocation=%s", updatedRecognitions.size(), goldLocation);
+
             }
         }
         return goldLocation;

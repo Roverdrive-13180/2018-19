@@ -36,26 +36,20 @@ public class TestCamera extends LinearOpMode {
 
         try {
             int count = 0;
-            String goldLocation = "";
 
             while (opModeIsActive()) {
-
+                String goldLocation = "";
                 if (gamepad1.a) {
-
-
                     // Get the gold mineral position (Left, Center or Right).
                     goldLocation = findGoldMineral();
-
                 }
                 telemetry.update();
             }
-
 
             // Shutdown Tensorflow as we are not going to use in manual mode.
             tensorFlow.shutdown();
 
             // Move to Depot
-
         } catch (Exception e) {
             telemetry.addData("Exception:", e);
             telemetry.update();
@@ -69,18 +63,12 @@ public class TestCamera extends LinearOpMode {
 
         if(goldLocation.equals("Center")){
             telemetry.addData("GoldLocation:", "Center");
-
         } else if(goldLocation.equals("Left")) {
-
             telemetry.addData("GoldLocation:", "Left");
-
         } else if (goldLocation.equals(("Right"))){
-
             telemetry.addData("GoldLocation:", "Right");
-
         }
         else {
-
             telemetry.addData("GoldLocation:", "Unknown");
         }
         return goldLocation;
