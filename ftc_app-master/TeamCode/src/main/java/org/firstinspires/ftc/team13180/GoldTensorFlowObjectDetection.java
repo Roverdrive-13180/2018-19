@@ -188,10 +188,10 @@ public class GoldTensorFlowObjectDetection {
                 }
 
                 opMode.telemetry.addData("Result", "Objects=%d goldLocation=%s", updatedRecognitions.size(), goldLocation);
-
             }
         }
         return goldLocation;
+
     }
 
     public void shutdown(){
@@ -226,6 +226,17 @@ public class GoldTensorFlowObjectDetection {
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+    }
+
+    /**
+     * Test Method
+     * @return List
+     */
+    public List<Recognition> getUpdatedRecognitions(){
+        if (tfod != null){
+            return tfod.getUpdatedRecognitions();
+        }
+        return null;
     }
 }
 
