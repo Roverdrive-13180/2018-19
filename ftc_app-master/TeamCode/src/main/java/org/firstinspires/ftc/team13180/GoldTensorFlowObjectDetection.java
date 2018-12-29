@@ -194,6 +194,23 @@ public class GoldTensorFlowObjectDetection {
         return goldLocation;
     }
 
+    /**
+     *
+     */
+    public List<Recognition> getUpdatedRecognitions() {
+
+        if (tfod != null) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                return updatedRecognitions;
+            }
+        }
+        return null;
+    }
+
+
     public void shutdown(){
         if(tfod!=null){
             tfod.shutdown();
