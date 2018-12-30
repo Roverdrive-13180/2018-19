@@ -24,7 +24,7 @@ public class PositionTensorFlowObjectDetection {
 
     }
     public boolean isTooLeft(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
-        return  false;
+        return  false; 
     }
 
     public boolean isTooRight(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
