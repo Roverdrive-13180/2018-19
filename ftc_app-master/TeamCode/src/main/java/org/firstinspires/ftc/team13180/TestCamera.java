@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by Raj Raghuwanshi on 12/23/2018.
+ * Updated by Shivam Adeshara on 12/29/18 
  * This is Test TeleOp program which does following.
  * 1. When button A is pressed, the camera will look for the gold mineral
  * 2. If found, it will print the value
@@ -46,7 +47,7 @@ public class TestCamera extends LinearOpMode {
                 if (gamepad1.a) {
                     testMineralLocationPrint();
                     telemetry.update();
-                    sleep(5000);
+                    sleep(2000);
                 }
             }
 
