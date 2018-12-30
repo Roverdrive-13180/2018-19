@@ -13,10 +13,6 @@ public class PositionTensorFlowObjectDetection {
         robotNavigator.init();
 
     }
-    
-
-
-
 
     public boolean isTooClose(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection) {
 
@@ -30,7 +26,7 @@ public class PositionTensorFlowObjectDetection {
     public boolean isTooRight(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
         return false;
     }
-    
+
     public void setPosition(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
                if(isTooClose(goldTensorFlowObjectDetection)== true) {
                    //move robot back
