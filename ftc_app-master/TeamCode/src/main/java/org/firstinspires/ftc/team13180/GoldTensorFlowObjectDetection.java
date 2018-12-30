@@ -243,8 +243,8 @@ public class GoldTensorFlowObjectDetection {
         int tfodMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        //Override default confidence level value to 0.8 from 0.4
-        tfodParameters.minimumConfidence = 0.7;
+        //Override default confidence level value to 0.4 from 0.4
+        tfodParameters.minimumConfidence = 0.4;
         tfodParameters.useObjectTracker = false;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);

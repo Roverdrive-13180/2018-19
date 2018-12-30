@@ -84,15 +84,15 @@ public class TestCamera extends LinearOpMode {
 
             if (updatedRecognitions.size() == 3) {
                 for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData("Result:","Label=%s L=%s T=%s R=%s B=%s W=%f H=%f C=%f", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence());
+                    telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
             } else if (updatedRecognitions.size() == 2) {
                 for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData("Result:","Label=%s L=%s T=%s R=%s B=%s W=%f H=%f C=%f", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence());
+                    telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
             } else if (updatedRecognitions.size() == 1) {
                 for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData("Result:","Label=%s L=%s T=%s R=%s B=%s W=%f H=%f C=%f", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence());
+                    telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
             }
         } else {
