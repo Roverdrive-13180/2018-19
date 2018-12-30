@@ -19,6 +19,7 @@ public class PositionTensorFlowObjectDetection {
 
 
     public boolean isTooClose(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection) {
+
         return false;
 
     }
@@ -39,7 +40,6 @@ public class PositionTensorFlowObjectDetection {
                if(isTooLeft(goldTensorFlowObjectDetection)== true){
                    //move robot right
                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 24, 10000);
-
 
                }
                if(isTooRight(goldTensorFlowObjectDetection)== true){
