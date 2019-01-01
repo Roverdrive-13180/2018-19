@@ -6,6 +6,8 @@ import org.firstinspires.ftc.team13180.RoboNavigator;
 
 import java.util.List;
 
+import static org.firstinspires.ftc.robotcore.external.tfod.TfodRoverRuckus.LABEL_GOLD_MINERAL;
+
 public class PositionTensorFlowObjectDetection {
     private LinearOpMode opMode;
     private RoboNavigator robotNavigator;
@@ -45,12 +47,12 @@ public class PositionTensorFlowObjectDetection {
     public boolean isTooLeft(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection) {
         List<Recognition> recognitions = tensorFlow.getRecognitions();
 
-        if (recognitions.size() == 3)  {
+        if (recognitions.size() == 3) {
             //TODO
             for (Recognition recognition : recognitions) {
                 if (recognition.getWidth() <= 640) {
                     return true;
-                } else{
+                } else {
                     break;
                 }
             }
@@ -58,17 +60,16 @@ public class PositionTensorFlowObjectDetection {
             for (Recognition recognition : recognitions) {
                 if (recognition.getLeft() <= 640) {
                     return true;
-                }else {
+                } else {
                     break;
                 }
-                }
             }
-         else if (recognitions.size() == 1) {
+        } else if (recognitions.size() == 1) {
             for (Recognition recognition : recognitions) {
 
                 if (recognition.getLeft() <= 640) {
                     return true;
-                } else{
+                } else {
                     break;
                 }
             }
@@ -84,34 +85,29 @@ public class PositionTensorFlowObjectDetection {
             for (Recognition recognition : recognitions) {
                 if (recognition.getWidth() >= 640) {
                     return true;
-                }
-                else{
-                        break;
-                    }
+                } else {
+                    break;
                 }
             }
-         else if (recognitions.size() == 2) {
-                    for (Recognition recognition : recognitions) {
-                        if (recognition.getLeft() >= 640) {
-                            return true;
-                        }
-                        else{
-                            break;
-                        }
-                    }
-        } else if (recognitions.size() == 1) {
-                    for (Recognition recognition : recognitions) {
-
-                        if (recognition.getLeft() >= 640) {
-                            return true;
-                        }
-                        else{
-                            break;
-                        }
-                    }
-
+        } else if (recognitions.size() == 2) {
+            for (Recognition recognition : recognitions) {
+                if (recognition.getLeft() >= 640) {
+                    return true;
+                } else {
+                    break;
                 }
+            }
+        } else if (recognitions.size() == 1) {
+            for (Recognition recognition : recognitions) {
 
+                if (recognition.getLeft() >= 640) {
+                    return true;
+                } else {
+                    break;
+                }
+            }
+
+        }
 
 
         return false;
@@ -136,13 +132,52 @@ public class PositionTensorFlowObjectDetection {
     }
     */
 
-    public void goForTheGold () {
-        List<Recognition> recognitions = tensorFlow.getRecognitions();
-        if (recognitions.size() == 3) {
-                tensorFlow.findGoldLocation(recognitions);
+    public boolean goForTheGold() {
+        List<Recognition> recognitions = null;
+
+        while (true) {
+            recognitions = tensorFlow.getRecognitions();
+            Recognition gold = null;
+
+            for (Recognition recognition : recognitions) {
+                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
+                    gold = recognition;
             }
+
+            if (gold != null) {
+                if (gold.getWidth() >= 1100 || gold.getHeight() >= 600) {
+                    // Too close hit and exit
+                    break;
+                } else
+                    centerTheGold(gold);
+            } else {
+                // adjustments to find gold
+                ;
+            }
+            return false;
         }
+        return true;
     }
+
+        public boolean centerTheGold (Recognition gold) {
+            float centerOfGold = gold.getLeft() + gold.getWidth() / 2;
+
+            if (centerOfGold <= 600) {
+                //move a little to right
+                ;
+            }
+            else if (centerOfGold >= 680) {
+                // move a little to the left
+                ;
+            }
+            else
+                // move forward by 2cm
+            ;
+            return true;
+        }
+
+}
+
 
 
 
