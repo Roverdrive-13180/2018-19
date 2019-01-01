@@ -117,7 +117,7 @@ public class PositionTensorFlowObjectDetection {
         return false;
     }
 
-    public void setPosition(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
+  /*  public void setPosition(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
                if(isTooClose(goldTensorFlowObjectDetection)== true) {
                    //move robot back
                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
@@ -134,16 +134,14 @@ public class PositionTensorFlowObjectDetection {
                }
 
     }
+    */
 
     public void goForTheGold () {
         List<Recognition> recognitions = tensorFlow.getRecognitions();
         if (recognitions.size() == 3) {
                 tensorFlow.findGoldLocation(recognitions);
-
             }
         }
-
-
     }
 
 
