@@ -141,11 +141,6 @@ public class PositionTensorFlowObjectDetection {
                 tensorFlow.findGoldLocation(recognitions);
 
             }
-
-        else if (recognitions.size() == 2){
-
-
-        }
         }
 
 
