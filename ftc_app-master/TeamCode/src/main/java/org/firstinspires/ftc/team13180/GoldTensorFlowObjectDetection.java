@@ -127,24 +127,7 @@ public class GoldTensorFlowObjectDetection {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 if (updatedRecognitions.size() == 3) {
-                    for (Recognition recognition : updatedRecognitions) {
-                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                        } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                        } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                        }
-                    }
-                    if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                        if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                            goldLocation = "Left";
-                        } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                            goldLocation = "Right";
-                        } else {
-                            goldLocation = "Center";
-                        }
-                    }
+                    findGoldLocation(updatedRecognitions);
                 }
                 else if (updatedRecognitions.size() == 2) {
                     for (Recognition recognition : updatedRecognitions) {
@@ -196,8 +179,34 @@ public class GoldTensorFlowObjectDetection {
 
     }
 
+    public String findGoldLocation( List<Recognition> recognitions) {
+        int goldMineralX = -1;
+        int silverMineral1X = -1;
+        int silverMineral2X = -1;
+        goldLocation = "";
+        for (Recognition recognition : recognitions) {
+            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                goldMineralX = (int) recognition.getLeft();
+            } else if (silverMineral1X == -1) {
+                silverMineral1X = (int) recognition.getLeft();
+            } else {
+                silverMineral2X = (int) recognition.getLeft();
+            }
+        }
+        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                goldLocation = "Left";
+            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                goldLocation = "Right";
+            } else {
+                goldLocation = "Center";
+            }
+        }
+        return goldLocation;
+    }
+
     /**
-     *
+     * Returns the list of recognitions, but only if they are different than the last call to getUpdatedRecognitions
      */
     public List<Recognition> getUpdatedRecognitions() {
 
@@ -207,6 +216,22 @@ public class GoldTensorFlowObjectDetection {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 return updatedRecognitions;
+            }
+        }
+        return null;
+    }
+    /**
+     * Returns the list of recognitions.
+     * We are taking a picture, so only return the old one , it will not be replaced
+     */
+    public List<Recognition> getRecognitions() {
+
+        if (tfod != null) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> recognitions = tfod.getRecognitions();
+            if (recognitions != null) {
+                return recognitions;
             }
         }
         return null;
@@ -254,6 +279,3 @@ public class GoldTensorFlowObjectDetection {
 
 
 }
-
-
-

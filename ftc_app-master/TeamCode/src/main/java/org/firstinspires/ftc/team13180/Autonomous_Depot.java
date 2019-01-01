@@ -19,6 +19,7 @@ public class Autonomous_Depot extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private RoboLander lander;
     private RoboGrabber grabber;
+    private PositionTensorFlowObjectDetection positionTFOD;
 
     // TODO: Measure distance
     // private ConceptVuforiaNavRoverRuckus vuforia;
@@ -40,6 +41,8 @@ public class Autonomous_Depot extends LinearOpMode {
         grabber.init();
 
 
+
+
         // Take picture to determine the robot location after landing.
         // vuforia = new ConceptVuforiaNavRoverRuckus();
 
@@ -47,12 +50,17 @@ public class Autonomous_Depot extends LinearOpMode {
         tensorFlow = new GoldTensorFlowObjectDetection();
         tensorFlow.init(this);
 
+        positionTFOD = new PositionTensorFlowObjectDetection();
+        positionTFOD.init(this);
+
+
         telemetry.addData("Status:", "initialized");
         telemetry.update();
 
         waitForStart();
 
         tensorFlow.activate();
+
 
         sleep(2000);
 
