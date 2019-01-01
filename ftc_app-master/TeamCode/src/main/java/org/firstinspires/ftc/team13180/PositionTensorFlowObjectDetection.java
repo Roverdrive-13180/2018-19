@@ -153,8 +153,8 @@ public class PositionTensorFlowObjectDetection {
             } else {
                 // adjustments to find gold
                 ;
+                return false;
             }
-            return false;
         }
         return true;
     }
