@@ -21,6 +21,8 @@ public class RoboNavigator {
     private DcMotor rearr;
     private DcMotor rearl;
 
+    boolean logging = true;
+
     RoboNavigator (LinearOpMode op)
     {
         opMode = op;
@@ -33,8 +35,9 @@ public class RoboNavigator {
         rearr = opMode.hardwareMap.get(DcMotor.class, "Rearr");
         topr.setDirection(DcMotor.Direction.REVERSE);
         rearr.setDirection(DcMotor.Direction.REVERSE);
-
-        opMode.telemetry.addData ("RoboNavigator:", "Initialized");
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator:", "Initialized");
+        }
     }
 
     public void moveForward(double power) {
@@ -42,7 +45,9 @@ public class RoboNavigator {
         topl.setPower(abs(power));
         rearl.setPower(abs(power));
         rearr.setPower(abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "moveForward (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "moveForward (power=%f)", power);
+        }
     }
 
     public void moveBackward(double power) {
@@ -50,7 +55,9 @@ public class RoboNavigator {
         topl.setPower(-abs(power));
         rearl.setPower(-abs(power));
         rearr.setPower(-abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "moveBackward (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "moveBackward (power=%f)", power);
+        }
     }
 
     public void shiftLeft (double power){
@@ -58,15 +65,19 @@ public class RoboNavigator {
         topr.setPower(-abs(power));
         rearl.setPower(-abs(power));
         rearr.setPower(abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "shiftLeft (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "shiftLeft (power=%f)", power);
         }
+    }
 
     public void shiftRight (double power){
         topl.setPower(-abs(power));
         topr.setPower(abs(power));
         rearl.setPower(abs(power));
         rearr.setPower(-abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
+        }
     }
 
     public void stopMotor() {
@@ -74,14 +85,18 @@ public class RoboNavigator {
         topr.setPower(0);
         rearl.setPower(0);
         rearr.setPower(0);
-        opMode.telemetry.addData ("RoboNavigator:", "stopMotor ()");
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "stopMotor ()");
+        }
     }
     public void turnRight (double power){
         topl.setPower(abs(power));
         topr.setPower(-abs(power));
         rearl.setPower(abs(power));
         rearr.setPower(-abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "turnRight (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "turnRight (power=%f)", power);
+        }
     }
 
     public void turnLeft (double power){
@@ -89,7 +104,9 @@ public class RoboNavigator {
         topr.setPower(abs(power));
         rearl.setPower(-abs(power));
         rearr.setPower(abs(power));
-        opMode.telemetry.addData ("RoboNavigator:", "turnLeft (power=%f)", power);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "turnLeft (power=%f)", power);
+        }
     }
 
     public void moveForwardTime(double power, long time) {
@@ -157,12 +174,14 @@ public class RoboNavigator {
     }
 
     private void logCurrentPosition () {
-        opMode.telemetry.addData("CurrentPosition:",
-                "topr=%7d, topl=%7d, rearr=%7d, rearl=%7d",
-                topr.getCurrentPosition(),
-                topl.getCurrentPosition(),
-                rearr.getCurrentPosition(),
-                rearl.getCurrentPosition());
+        if(logging) {
+            opMode.telemetry.addData("CurrentPosition:",
+                    "topr=%7d, topl=%7d, rearr=%7d, rearl=%7d",
+                    topr.getCurrentPosition(),
+                    topl.getCurrentPosition(),
+                    rearr.getCurrentPosition(),
+                    rearl.getCurrentPosition());
+        }
     }
 
     private void setTargetPosition(DIRECTION direction, double cms) {
@@ -209,12 +228,16 @@ public class RoboNavigator {
                              double cms,
                              double timeoutMs) {
 
-        opMode.telemetry.addData("RoboNavitator:", "Resetting Encoders");    //
+        if(logging) {
+            opMode.telemetry.addData("RoboNavitator:", "Resetting Encoders");    //
+        }
 
         setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        opMode.telemetry.addData("RoboNavigator:", "Encoders reset");
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator:", "Encoders reset");
+        }
 
         // Send telemetry message to indicate currentPosition
         logCurrentPosition();
@@ -253,5 +276,8 @@ public class RoboNavigator {
         }
     }
 
+    public void setLogging(boolean value) {
+        logging = value;
+    }
 }
 

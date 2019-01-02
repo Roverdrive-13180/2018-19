@@ -158,7 +158,11 @@ public class PositionTensorFlowObjectDetection {
             for (Recognition recognition : recognitions) {
                 if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                     gold = recognition;
-                    opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(), recognition.getTop(), recognition.getRight(), recognition.getBottom(), recognition.getWidth(), recognition.getHeight(), recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
+                    opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d",
+                            recognition.getLabel(), recognition.getLeft(), recognition.getTop(), recognition.getRight(), recognition.getBottom(),
+                            recognition.getWidth(), recognition.getHeight(), recognition.getConfidence(), recognition.getImageWidth(),
+                            recognition.getImageHeight());
+                    break;
                 }
             }
 
@@ -172,16 +176,20 @@ public class PositionTensorFlowObjectDetection {
                 } else {
                     centerTheGold(gold);
                     // move forward 5 cms
+                    opMode.telemetry.addData("move forward 5 cms:", "");
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
 
                 }
             } else {
                 // adjustments to find gold
+                opMode.telemetry.addData("Turning right:", "");
                 robotNavigator.turnRightTime(NAVIGATER_POWER, 1000);
             }
             opMode.telemetry.update();
-            opMode.sleep(500);
+            opMode.sleep(1000);
         }
+
+        opMode.telemetry.addData("Returning from gotForGold:", "");
         return true;
     }
 

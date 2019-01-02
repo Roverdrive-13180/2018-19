@@ -31,6 +31,7 @@ public class TestGoForGold extends LinearOpMode {
 
         robotNavigator = new RoboNavigator(this);
         robotNavigator.init();
+        robotNavigator.setLogging(false);
 
         // Do not clear log
         telemetry.setAutoClear(false);
@@ -64,6 +65,8 @@ public class TestGoForGold extends LinearOpMode {
             //telemetry.addData("Exception:", e);
             //telemetry.update();
         }
+        // sleep to read console log.
+        this.sleep(5000);
     }
 
 
