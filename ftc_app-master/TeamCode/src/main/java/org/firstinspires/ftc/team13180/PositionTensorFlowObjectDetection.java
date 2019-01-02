@@ -150,7 +150,7 @@ public class PositionTensorFlowObjectDetection {
         runtime.reset();
         int timeoutMs = 20000;
 
-        while ((runtime.seconds() < timeoutMs)) {
+        while ((runtime.milliseconds() < timeoutMs)) {
             recognitions = tensorFlow.getRecognitions();
             Recognition gold = null;
 
@@ -171,14 +171,13 @@ public class PositionTensorFlowObjectDetection {
                 if (gold.getWidth() >= 1100 || gold.getHeight() >= 600) {
                     // Too close hit and exit
                     opMode.telemetry.addData("Too close hit and exit:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 20, 10000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 20, 10000);
                     break;
                 } else {
                     centerTheGold(gold);
                     // move forward 5 cms
                     opMode.telemetry.addData("move forward 5 cms:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 5, 10000);
                 }
             } else {
                 // adjustments to find gold
@@ -196,21 +195,19 @@ public class PositionTensorFlowObjectDetection {
     public void centerTheGold(Recognition gold) {
         float centerOfGold = gold.getLeft() + gold.getWidth() / 2;
 
+        // Calculate the cms per pixel for current gold
+        float cms_per_pixel = 5 / gold.getHeight();
+        float pixels_to_move = 640 - centerOfGold;
+        float cms_to_move = cms_per_pixel * pixels_to_move;
+
         if (centerOfGold <= 600) {
-            //move a little to right
-            // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 2, 10000);
-            opMode.telemetry.addData("move a little to right:", "");
+            // move to left
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            opMode.telemetry.addData("move to left:", "%s", cms_to_move);
         } else if (centerOfGold >= 680) {
-            // move a little to the left
-            // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
-            opMode.telemetry.addData("move a little to left:", "");
-        } else {
-            // move forward by 2cm
-            // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-            opMode.telemetry.addData("move forward by 2cm", "");
+            // move to the right
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            opMode.telemetry.addData("move to right:", "%s", cms_to_move);
         }
         return;
     }

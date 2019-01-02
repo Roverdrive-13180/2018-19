@@ -198,13 +198,13 @@ public class RoboNavigator {
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
         }
-        if (direction == DIRECTION.SHIFT_LEFT) {
+        if (direction == DIRECTION.SHIFT_RIGHT) {
             topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
         }
-        if (direction == DIRECTION.SHIFT_RIGHT) {
+        if (direction == DIRECTION.SHIFT_LEFT) {
             topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
@@ -261,7 +261,7 @@ public class RoboNavigator {
 
             // keep looping while we are still active, and there is time left, and motor is running.
             while (opMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutMs) &&
+                    (runtime.milliseconds() < timeoutMs) &&
                     (isBusy())) {
 
                 // Display it for the driver.
