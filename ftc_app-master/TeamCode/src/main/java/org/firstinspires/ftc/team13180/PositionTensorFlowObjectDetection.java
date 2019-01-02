@@ -199,12 +199,12 @@ public class PositionTensorFlowObjectDetection {
         if (centerOfGold <= 600) {
             //move a little to right
             // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 2, 10000);
             opMode.telemetry.addData("move a little to right:", "");
         } else if (centerOfGold >= 680) {
             // move a little to the left
             // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
             opMode.telemetry.addData("move a little to left:", "");
         } else {
             // move forward by 2cm
