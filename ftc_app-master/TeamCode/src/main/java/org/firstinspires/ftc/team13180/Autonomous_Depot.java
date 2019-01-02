@@ -50,7 +50,7 @@ public class Autonomous_Depot extends LinearOpMode {
         tensorFlow = new GoldTensorFlowObjectDetection();
         tensorFlow.init(this);
 
-        positionTFOD = new PositionTensorFlowObjectDetection();
+        positionTFOD = new PositionTensorFlowObjectDetection(this, robotNavigator, tensorFlow);
         positionTFOD.init(this);
 
 

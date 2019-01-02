@@ -230,7 +230,7 @@ public class GoldTensorFlowObjectDetection {
 
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
+            // the last time that call was made. We are calling getRecognitions instead so that we will always get list
             List<Recognition> recognitions = tfod.getRecognitions();
             if (recognitions != null) {
                 return recognitions;

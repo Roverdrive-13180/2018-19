@@ -2,7 +2,6 @@ package org.firstinspires.ftc.team13180;
 
 import android.support.annotation.Nullable;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,17 +10,17 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import java.util.List;
 
 /**
- * Created by Raj Raghuwanshi on 12/23/2018.
- * Updated by Shivam Adeshara on 12/29/18 
- * This is Test TeleOp program which does following.
- * 1. When button A is pressed, the camera will look for the gold mineral
- * 2. If found, it will print the value
+ * Created by Shivam Adeshara and Arnav Pradhan on 1/1/19
+ * This is Test GoForGold  program which does following.
+ * TODO:
  */
 
-@TeleOp(name="Test_Camera", group="manualmode")
-public class TestCamera extends LinearOpMode {
+@TeleOp(name="Test_GoForGold", group="manualmode")
+public class TestGoForGold extends LinearOpMode {
 
     private GoldTensorFlowObjectDetection tensorFlow;
+    private PositionTensorFlowObjectDetection positionTensorFlowObjectDetection;
+    private RoboNavigator robotNavigator;
 
     @Override
     public void runOpMode() {
@@ -30,12 +29,19 @@ public class TestCamera extends LinearOpMode {
         tensorFlow = new GoldTensorFlowObjectDetection();
         tensorFlow.init(this);
 
+        robotNavigator = new RoboNavigator(this);
+        robotNavigator.init();
+
+        // Do not clear log
+        telemetry.setAutoClear(false);
         telemetry.addData("Status:", "initialized");
         telemetry.update();
 
         waitForStart();
 
         tensorFlow.activate();
+
+        positionTensorFlowObjectDetection = new PositionTensorFlowObjectDetection(this, robotNavigator, tensorFlow);
 
         sleep(2000);
 
@@ -45,7 +51,7 @@ public class TestCamera extends LinearOpMode {
             while (opModeIsActive()) {
                 String goldLocation = "";
                 if (gamepad1.a) {
-                    testMineralLocationPrint();
+                    positionTensorFlowObjectDetection.goForTheGold();
                     telemetry.update();
                     sleep(2000);
                 }
@@ -54,44 +60,29 @@ public class TestCamera extends LinearOpMode {
             // Shutdown Tensorflow as we are not going to use in manual mode.
             tensorFlow.shutdown();
 
-            // Move to Depot
-        } catch (Exception e) {
+          } catch (Exception e) {
             //telemetry.addData("Exception:", e);
             //telemetry.update();
         }
     }
 
-    @Nullable
-    private String findGoldMineral() {
-        String goldLocation;
-        goldLocation = tensorFlow.getGoldLocation();
-        if (goldLocation.equals("Center")) {
-            telemetry.addData("GoldLocation:", "Center");
-        } else if (goldLocation.equals("Left")) {
-            telemetry.addData("GoldLocation:", "Left");
-        } else if (goldLocation.equals(("Right"))) {
-            telemetry.addData("GoldLocation:", "Right");
-        } else {
-            telemetry.addData("GoldLocation:", "Unknown");
-        }
-        return goldLocation;
-    }
+
 
     public void testMineralLocationPrint() {
-        List<Recognition> recognitions = tensorFlow.getRecognitions();
-        if (recognitions != null) {
-            telemetry.addData("size:","%d", recognitions.size());
+        List<Recognition> updatedRecognitions = tensorFlow.getUpdatedRecognitions();
+        if (updatedRecognitions != null) {
+            telemetry.addData("size:","%d", updatedRecognitions.size());
 
-            if (recognitions.size() == 3) {
-                for (Recognition recognition : recognitions) {
+            if (updatedRecognitions.size() == 3) {
+                for (Recognition recognition : updatedRecognitions) {
                     telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
-            } else if (recognitions.size() == 2) {
-                for (Recognition recognition : recognitions) {
+            } else if (updatedRecognitions.size() == 2) {
+                for (Recognition recognition : updatedRecognitions) {
                     telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
-            } else if (recognitions.size() == 1) {
-                for (Recognition recognition : recognitions) {
+            } else if (updatedRecognitions.size() == 1) {
+                for (Recognition recognition : updatedRecognitions) {
                     telemetry.addData("Result:","Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", recognition.getLabel(), recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom(),recognition.getWidth(),recognition.getHeight(),recognition.getConfidence(), recognition.getImageWidth(), recognition.getImageHeight());
                 }
             }
