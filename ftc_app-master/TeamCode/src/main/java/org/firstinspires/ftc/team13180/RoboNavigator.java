@@ -151,13 +151,15 @@ public class RoboNavigator {
      *  1) Move gets to the desired position
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
+     *
      */
-
+    private static  final double ROBO_DIAMETER_CM = 45;
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    private static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared up
+    private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_CM * 3.1415);
+    private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM *(WHEEL_DIAMETER_CM / ROBO_DIAMETER_CM) * 360;
 
     private void setRunMode (DcMotor.RunMode runMode) {
         topr.setMode(runMode);
@@ -192,25 +194,36 @@ public class RoboNavigator {
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
         }
-        if (direction == DIRECTION.BACKWARD) {
+        else if (direction == DIRECTION.BACKWARD) {
             topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-        }
-        if (direction == DIRECTION.SHIFT_RIGHT) {
+        } else if (direction == DIRECTION.SHIFT_RIGHT) {
             topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-        }
-        if (direction == DIRECTION.SHIFT_LEFT) {
+        } else if (direction == DIRECTION.SHIFT_LEFT) {
             topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+        } else if (direction == DIRECTION.TURN_LEFT){
+            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+        }
+        else if (direction == DIRECTION.TURN_RIGHT) {
+            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
         }
     }
+
+
 
     private boolean isBusy () {
         return topr.isBusy() && topl.isBusy() && rearr.isBusy() && rearl.isBusy();
@@ -220,7 +233,9 @@ public class RoboNavigator {
         FORWARD,
         BACKWARD,
         SHIFT_LEFT,
-        SHIFT_RIGHT
+        SHIFT_RIGHT,
+        TURN_LEFT,
+        TURN_RIGHT
     };
 
     public void encoderDrive(DIRECTION direction,

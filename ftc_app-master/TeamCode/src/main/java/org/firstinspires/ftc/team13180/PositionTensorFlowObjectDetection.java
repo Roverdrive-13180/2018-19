@@ -169,7 +169,7 @@ public class PositionTensorFlowObjectDetection {
 
             // Frame is 1280 X 720
             if (gold != null) {
-                if (gold.getWidth() >= 1100 || gold.getHeight() >= 600) {
+                if (gold.getBottom() >= 680) {
                     // Too close hit and exit
                     opMode.telemetry.addData("Too close hit and exit:", "");
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 20, 10000);
@@ -178,7 +178,7 @@ public class PositionTensorFlowObjectDetection {
                     centerTheGold(gold);
                     // move forward 5 cms
                     opMode.telemetry.addData("move forward 5 cms:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 5, 10000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
                 }
             } else {
                 // adjustments to find gold
@@ -186,7 +186,7 @@ public class PositionTensorFlowObjectDetection {
                 robotNavigator.turnRightTime(NAVIGATER_POWER, 1000);
             }
             opMode.telemetry.update();
-            opMode.sleep(1000);
+            opMode.sleep(2000);
         }
 
         opMode.telemetry.addData("Returning from gotForGold:", "");
