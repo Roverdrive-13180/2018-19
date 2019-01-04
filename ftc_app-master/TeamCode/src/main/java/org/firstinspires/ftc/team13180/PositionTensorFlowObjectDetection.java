@@ -7,6 +7,7 @@ import org.firstinspires.ftc.team13180.RoboNavigator;
 
 import java.util.List;
 
+import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.robotcore.external.tfod.TfodRoverRuckus.LABEL_GOLD_MINERAL;
 
@@ -197,7 +198,8 @@ public class PositionTensorFlowObjectDetection {
 
         // Calculate the cms per pixel for current gold
         float cms_per_pixel = 5 / gold.getHeight();
-        float pixels_to_move = 640 - centerOfGold;
+        float pixels_to_move = abs(640 - centerOfGold);
+
         float cms_to_move = cms_per_pixel * pixels_to_move;
 
         if (centerOfGold <= 600) {
