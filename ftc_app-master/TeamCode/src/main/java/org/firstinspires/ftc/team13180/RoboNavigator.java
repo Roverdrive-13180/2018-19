@@ -161,6 +161,7 @@ public class RoboNavigator {
             (WHEEL_DIAMETER_CM * 3.1415);
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
     private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;
+    private static final double SHIFT_SLIPPAGE_CORRECTION = 1.35;
 
 
     private void setRunMode (DcMotor.RunMode runMode) {
@@ -202,15 +203,15 @@ public class RoboNavigator {
             rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
             rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
         } else if (direction == DIRECTION.SHIFT_RIGHT) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
         } else if (direction == DIRECTION.SHIFT_LEFT) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
         } else if (direction == DIRECTION.TURN_LEFT){
             topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
             topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
