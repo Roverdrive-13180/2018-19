@@ -22,33 +22,21 @@ public class TestGrabber extends LinearOpMode{
         while (opModeIsActive()) {
 
             if (gamepad1.a) {
-                grabber.moveGrabberDown(SPEED);
-            }
-            else if (gamepad1.b) {
                 grabber.moveGrabberUp(SPEED);
             }
+            else if (gamepad1.b) {
+                grabber.moveGrabberDown(SPEED);
+            }
             else if (gamepad1.x) {
-                grabber.spinIn(SPEED);
+                grabber.spinIn();
             }
             else if (gamepad1.y) {
-                grabber.spinOut(SPEED);
+                grabber.spinOut();
             }
-            else if (gamepad1.left_bumper) {
-                grabber.tiltUp();
-                telemetry.addData("Grabber:", "left_bumper tilt up");
-                telemetry.update();
-            }
-            else if (gamepad1.right_bumper) {
-                grabber.tiltDown();
-                telemetry.addData("Grabber:", "right_bumper tilt down");    //
-                telemetry.update();
-            }
-            else {
-                grabber.stopGrabber();
-                grabber.stopSpinner();
+
             }
         }
 
     }
 
-}
+

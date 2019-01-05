@@ -172,7 +172,7 @@ public class PositionTensorFlowObjectDetection {
                 if (gold.getBottom() >= 680) {
                     // Too close hit and exit
                     opMode.telemetry.addData("Too close hit and exit:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 20, 10000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 50, 10000);
                     break;
                 } else {
                     centerTheGold(gold);

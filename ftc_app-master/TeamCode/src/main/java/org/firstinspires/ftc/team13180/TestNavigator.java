@@ -56,10 +56,10 @@ public class TestNavigator extends LinearOpMode {
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, SPEED, 50, 10000 );
             }
             else if (gamepad2.left_bumper) {
-                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, SPEED, 10, 10000);
+                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, SPEED, 90, 10000);
             }
             else if (gamepad2.right_bumper){
-                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 10,10000);
+                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,10000);
             }
            else {
                 robotnav.stopMotor();

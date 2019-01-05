@@ -153,13 +153,15 @@ public class RoboNavigator {
      *  3) Driver stops the opmode running.
      *
      */
-    private static  final double ROBO_DIAMETER_CM = 45;
+    private static  final double ROBO_DIAMETER_CM = 64;
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_CM * 3.1415);
-    private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM *(WHEEL_DIAMETER_CM / ROBO_DIAMETER_CM) * 360;
+    private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
+    private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;
+
 
     private void setRunMode (DcMotor.RunMode runMode) {
         topr.setMode(runMode);

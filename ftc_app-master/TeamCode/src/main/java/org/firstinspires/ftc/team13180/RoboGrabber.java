@@ -16,27 +16,21 @@ public class RoboGrabber {
 
     private LinearOpMode opMode;
 
-    private DcMotor spinner;
     private DcMotor grabber;
-    private Servo tilt1;
-    private Servo tilt2;
-
+    private Servo spinner;
     public RoboGrabber (LinearOpMode op) {
         opMode = op;
     }
 
     public void init() {
-        spinner = opMode.hardwareMap.get(DcMotor.class, "Grabber");
-        spinner.setDirection(DcMotorSimple.Direction.REVERSE);
+        spinner = opMode.hardwareMap.get(Servo.class, "Grabber");
         grabber = opMode.hardwareMap.get(DcMotor.class, "Winch");
-        tilt1 = opMode.hardwareMap.get(Servo.class, "Tilt1");
-        tilt2 = opMode.hardwareMap.get(Servo.class, "Tilt2");
 
         // Set up Tilt in up position
-        tiltUp();
     }
 
     public void moveGrabberUp(double power) {
+
         grabber.setPower(abs(power));
     }
 
@@ -61,15 +55,13 @@ public class RoboGrabber {
         grabber.setPower(0);
     }
 
-    public void spinIn(double power) {
-        spinner.setPower(abs(power));
+    public void spinIn (){
+        spinner.setPosition(0);
     }
-
-    public void spinOut(double power) {
-        spinner.setPower(-abs(power));
+    public void spinOut (){
+        spinner.setPosition(180);
     }
-
-    public void spinInTime(double power, long time) {
+ /*   public void spinInTime(double power, long time) {
         spinIn(power);
         opMode.sleep(time);
         stopSpinner();
@@ -86,14 +78,12 @@ public class RoboGrabber {
     }
 
     public void tiltUp() {
-        tilt1.setPosition(0);
-        tilt2.setPosition(0);
+
     }
 
     public void tiltDown() {
-        tilt1.setPosition(0.5);
-        tilt2.setPosition(0.5);
-    }
+
+    } */
 
 
 }
