@@ -184,7 +184,7 @@ public class PositionTensorFlowObjectDetection {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,45,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,90,10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,90,10000);
 
             }
             opMode.telemetry.update();
@@ -206,11 +206,11 @@ public class PositionTensorFlowObjectDetection {
 
         if (centerOfGold <= 600) {
             // move to left
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, cms_to_move, 10000);
             opMode.telemetry.addData("move to left:", "%s", cms_to_move);
         } else if (centerOfGold >= 680) {
             // move to the right
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, cms_to_move, 10000);
             opMode.telemetry.addData("move to right:", "%s", cms_to_move);
         }
         return;
