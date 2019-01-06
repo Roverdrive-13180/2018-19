@@ -1,3 +1,4 @@
+//Made by Rohan Gulati and a little bit from Shivy
 package org.firstinspires.ftc.team13180;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -56,7 +57,7 @@ public class PositionTensorFlowObjectDetection {
         if (recognitions.size() == 3) {
             //TODO
             for (Recognition recognition : recognitions) {
-                if (recognition.getWidth() <= 640) {
+                if (recognition.getLeft() <= 640) {
                     return true;
                 } else {
                     break;
@@ -90,7 +91,7 @@ public class PositionTensorFlowObjectDetection {
 
         if (recognitions.size() == 3) {
             for (Recognition recognition : recognitions) {
-                if (recognition.getWidth() >= 640) {
+                if (recognition.getLeft() >= 640) {
                     return true;
                 } else {
                     break;
@@ -119,7 +120,7 @@ public class PositionTensorFlowObjectDetection {
         return false;
     }
 
-  /*  public void setPosition(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
+  /*public void setPosition(GoldTensorFlowObjectDetection goldTensorFlowObjectDetection){
                if(isTooClose(goldTensorFlowObjectDetection)== true) {
                    //move robot back
                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
@@ -177,13 +178,15 @@ public class PositionTensorFlowObjectDetection {
                 } else {
                     centerTheGold(gold);
                     // move forward 5 cms
-                    opMode.telemetry.addData("move forward 5 cms:", "");
+                    opMode.telemetry.addData("move forward 10 cms:", "");
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
                 }
             } else {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
-                robotNavigator.turnRightTime(NAVIGATER_POWER, 1000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,45,10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,90,10000);
+
             }
             opMode.telemetry.update();
             opMode.sleep(2000);
