@@ -7,6 +7,7 @@ import org.firstinspires.ftc.team13180.RoboNavigator;
 
 import java.util.List;
 
+import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.robotcore.external.tfod.TfodRoverRuckus.LABEL_GOLD_MINERAL;
 
@@ -150,7 +151,7 @@ public class PositionTensorFlowObjectDetection {
         runtime.reset();
         int timeoutMs = 20000;
 
-        while ((runtime.seconds() < timeoutMs)) {
+        while ((runtime.milliseconds() < timeoutMs)) {
             recognitions = tensorFlow.getRecognitions();
             Recognition gold = null;
 
@@ -168,17 +169,16 @@ public class PositionTensorFlowObjectDetection {
 
             // Frame is 1280 X 720
             if (gold != null) {
-                if (gold.getWidth() >= 1100 || gold.getHeight() >= 600) {
+                if (gold.getBottom() >= 680) {
                     // Too close hit and exit
                     opMode.telemetry.addData("Too close hit and exit:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 20, 10000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 50, 10000);
                     break;
                 } else {
                     centerTheGold(gold);
                     // move forward 5 cms
                     opMode.telemetry.addData("move forward 5 cms:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
                 }
             } else {
                 // adjustments to find gold
@@ -186,7 +186,7 @@ public class PositionTensorFlowObjectDetection {
                 robotNavigator.turnRightTime(NAVIGATER_POWER, 1000);
             }
             opMode.telemetry.update();
-            opMode.sleep(1000);
+            opMode.sleep(2000);
         }
 
         opMode.telemetry.addData("Returning from gotForGold:", "");
@@ -196,21 +196,22 @@ public class PositionTensorFlowObjectDetection {
     public void centerTheGold(Recognition gold) {
         float centerOfGold = gold.getLeft() + gold.getWidth() / 2;
 
+        // Calculate the cms per pixel for current gold
+        float cms_per_pixel = 5 / gold.getHeight();
+        float pixels_to_move = abs(640 - centerOfGold);
+
+        float cms_to_move = cms_per_pixel * pixels_to_move;
+
         if (centerOfGold <= 600) {
             //move a little to left
             // TODO: the move left should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
             opMode.telemetry.addData("move a little to left:", "");
         } else if (centerOfGold >= 680) {
             // move a little to the right
             // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 2, 10000);
             opMode.telemetry.addData("move a little to right:", "");
-        } else {
-            // move forward by 2cm
-            // TODO: the move right should be a function of the distance of gold center from the center line
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 2, 10000);
-            opMode.telemetry.addData("move forward by 2cm", "");
         }
         return;
     }

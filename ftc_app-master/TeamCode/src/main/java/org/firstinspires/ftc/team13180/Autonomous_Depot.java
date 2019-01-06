@@ -128,11 +128,12 @@ public class Autonomous_Depot extends LinearOpMode {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30,10000);
             }
 
-            grabber.tiltDown();
-            grabber.spinOutTime(1.0, 3000);
+           /* grabber.tiltDown();
+            grabber.spinOutTime(1.0, 3000);*/
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 10, 10000);
-            grabber.spinOutTime(1.0, 3000);
+           // grabber.spinOutTime(1.0, 3000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 20, 10000);
+
 
 
         } catch (Exception e) {

@@ -14,6 +14,7 @@ import java.util.List;
  * This is Test GoForGold  program which does following.
  * TODO:
  */
+//plz work -rg
 
 @TeleOp(name="Test_GoForGold", group="manualmode")
 public class TestGoForGold extends LinearOpMode {
