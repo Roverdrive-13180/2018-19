@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.team13180;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 import static java.lang.Math.abs;
 
@@ -17,14 +18,17 @@ public class RoboGrabber {
     private LinearOpMode opMode;
 
     private DcMotor grabber;
-    private Servo spinner;
+    private CRServo spinner;
     public RoboGrabber (LinearOpMode op) {
         opMode = op;
     }
+    static final double DOWN_SPEED_FACTOR = 0.25;
 
     public void init() {
-        spinner = opMode.hardwareMap.get(Servo.class, "Grabber");
+        spinner = opMode.hardwareMap.get(CRServo.class, "Grabber");
+        stopSpin();
         grabber = opMode.hardwareMap.get(DcMotor.class, "Winch");
+        stopGrabber();
 
         // Set up Tilt in up position
     }
@@ -35,7 +39,7 @@ public class RoboGrabber {
     }
 
     public void moveGrabberDown(double power) {
-        grabber.setPower(-abs(power));
+        grabber.setPower(-abs(power * DOWN_SPEED_FACTOR));
     }
 
     public void moveGrabberUpTime(double power, long time) {
@@ -56,11 +60,12 @@ public class RoboGrabber {
     }
 
     public void spinIn (){
-        spinner.setPosition(0);
+        spinner.setPower(1);
     }
     public void spinOut (){
-        spinner.setPosition(180);
+        spinner.setPower(-1);
     }
+    public void stopSpin () { spinner.setPower(0); }
  /*   public void spinInTime(double power, long time) {
         spinIn(power);
         opMode.sleep(time);
