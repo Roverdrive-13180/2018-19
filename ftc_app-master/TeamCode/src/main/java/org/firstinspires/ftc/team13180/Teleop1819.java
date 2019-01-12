@@ -2,7 +2,7 @@ package org.firstinspires.ftc.team13180;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 import static java.lang.Math.abs;
 
@@ -82,21 +82,21 @@ public class Teleop1819 extends LinearOpMode {
                 robotnav.stopMotor();
 
             // Lander
-            if (gamepad2.y){
+            if (gamepad2.dpad_up){
                 lander.moveUpTime(multiPlier1, 5);
             }
 
-            if (gamepad2.a){
+            if (gamepad2.dpad_down){
                 lander.moveDownTime(multiPlier1, 5);
 
             }
 
             //  Grabber
-            if (gamepad2.dpad_up) {
-                grabber.moveGrabberUpTime(0.5, 5);
+            if (gamepad2.y) {
+                grabber.moveGrabberUp(1);
             }
-            if (gamepad2.dpad_down) {
-                grabber.moveGrabberDownTime(0.5, 5);
+            if (gamepad2.a) {
+                grabber.moveGrabberDown(1);
             }
           /*  if (gamepad2.right_trigger > 0.1) {
                 grabber.spinInTime(gamepad2.right_trigger, 5);
@@ -104,13 +104,16 @@ public class Teleop1819 extends LinearOpMode {
             if (gamepad2.left_trigger > 0.1) {
                 grabber.spinOutTime(gamepad2.left_trigger, 5);
             }
-            if (gamepad2.left_bumper) {
-                grabber.tiltDown();
+           */if (gamepad2.x) {
+                grabber.spinIn();
             }
-            if (gamepad2.right_bumper) {
-                grabber.tiltUp();
+            else if (gamepad2.b) {
+                grabber.spinOut();
 
-            }*/
+            }
+            else {
+               grabber.stopSpin();
+            }
         }
     }
 }
