@@ -150,7 +150,7 @@ public class PositionTensorFlowObjectDetection {
         ElapsedTime runtime = new ElapsedTime();
 
         runtime.reset();
-        int timeoutMs = 20000;
+        int timeoutMs = 10000;
 
         while ((runtime.milliseconds() < timeoutMs)) {
             recognitions = tensorFlow.getRecognitions();
@@ -184,8 +184,15 @@ public class PositionTensorFlowObjectDetection {
             } else {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
+<<<<<<< HEAD
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,45,10000);
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,90,10000);
+=======
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,40,10000);
+                opMode.sleep(500);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,80,10000);
+                opMode.sleep(500);
+>>>>>>> de78304913f0e80f8eb56095ff32f3f51ed8a677
 
             }
             opMode.telemetry.update();
@@ -207,11 +214,11 @@ public class PositionTensorFlowObjectDetection {
 
         if (centerOfGold <= 600) {
             // move to left
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, cms_to_move, 10000);
             opMode.telemetry.addData("move to left:", "%s", cms_to_move);
         } else if (centerOfGold >= 680) {
             // move to the right
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, cms_to_move, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, cms_to_move, 10000);
             opMode.telemetry.addData("move to right:", "%s", cms_to_move);
         }
         return;
