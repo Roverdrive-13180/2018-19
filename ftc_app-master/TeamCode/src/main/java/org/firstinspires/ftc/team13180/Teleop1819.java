@@ -93,10 +93,10 @@ public class Teleop1819 extends LinearOpMode {
 
             //  Grabber
             if (gamepad2.y) {
-                grabber.moveGrabberUpTime(multiPlier1, 5);
+                grabber.moveGrabberUp(1);
             }
             if (gamepad2.a) {
-                grabber.moveGrabberDownTime(multiPlier1, 5);
+                grabber.moveGrabberDown(1);
             }
           /*  if (gamepad2.right_trigger > 0.1) {
                 grabber.spinInTime(gamepad2.right_trigger, 5);

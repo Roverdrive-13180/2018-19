@@ -149,7 +149,7 @@ public class PositionTensorFlowObjectDetection {
         ElapsedTime runtime = new ElapsedTime();
 
         runtime.reset();
-        int timeoutMs = 20000;
+        int timeoutMs = 10000;
 
         while ((runtime.milliseconds() < timeoutMs)) {
             recognitions = tensorFlow.getRecognitions();
