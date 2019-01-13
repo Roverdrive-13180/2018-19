@@ -21,7 +21,7 @@ public class Teleop1819 extends LinearOpMode {
 
         lander = new RoboLander(this);
         lander.init();
-        grabber = new RoboGrabber (this);
+        grabber = new RoboGrabber(this);
         grabber.init();
 
         waitForStart();
@@ -31,51 +31,51 @@ public class Teleop1819 extends LinearOpMode {
         double SPEED = 1;
 
         while (opModeIsActive()) {
-           double motorPower = 0;
-           boolean anySignal = false;
+            double motorPower = 0;
+            boolean anySignal = false;
 
-           // Navigator
+            // Navigator
 
-            if (gamepad1.left_stick_y > minPower){
+            if (gamepad1.left_stick_y > minPower) {
                 motorPower = multiPlier1 * gamepad1.left_stick_y;
                 robotnav.moveBackward(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "moveBackward(%f):", motorPower);
+                telemetry.addData("Navigator:", "moveBackward(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.left_stick_y < -minPower){
+            if (gamepad1.left_stick_y < -minPower) {
                 motorPower = multiPlier1 * gamepad1.left_stick_y;
                 robotnav.moveForward(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "moveForward(%f):", motorPower);
+                telemetry.addData("Navigator:", "moveForward(%f):", motorPower);
                 telemetry.update();
             }
-            if(gamepad1.right_stick_x > minPower){
+            if (gamepad1.right_stick_x > minPower) {
                 motorPower = multiPlier1 * gamepad1.right_stick_x;
                 robotnav.shiftLeft(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "shiftLeft(%f):", motorPower);
+                telemetry.addData("Navigator:", "shiftLeft(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.right_stick_x < -minPower){
+            if (gamepad1.right_stick_x < -minPower) {
                 motorPower = multiPlier1 * gamepad1.right_stick_x;
                 robotnav.shiftRight(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "shiftRight(%f):", motorPower);
+                telemetry.addData("Navigator:", "shiftRight(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.right_trigger > minPower){
+            if (gamepad1.right_trigger > minPower) {
                 motorPower = multiPlier1 * gamepad1.right_trigger;
                 robotnav.turnLeft(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "turnLeft(%f):", motorPower);
+                telemetry.addData("Navigator:", "turnLeft(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.left_trigger > minPower){
+            if (gamepad1.left_trigger > minPower) {
                 motorPower = multiPlier1 * gamepad1.left_trigger;
                 robotnav.turnRight(abs(motorPower));
                 anySignal = true;
-                telemetry.addData ("Navigator:", "turnRight`x`(%f):", motorPower);
+                telemetry.addData("Navigator:", "turnRight`x`(%f):", motorPower);
                 telemetry.update();
             }
 
@@ -83,11 +83,11 @@ public class Teleop1819 extends LinearOpMode {
                 robotnav.stopMotor();
 
             // Lander
-            if (gamepad2.dpad_up){
+            if (gamepad2.dpad_up) {
                 lander.moveUpTime(multiPlier1, 5);
             }
 
-            if (gamepad2.dpad_down){
+            if (gamepad2.dpad_down) {
                 lander.moveDownTime(multiPlier1, 5);
 
             }
@@ -95,14 +95,12 @@ public class Teleop1819 extends LinearOpMode {
             //  Grabber
             if (gamepad2.y) {
                 grabber.moveGrabberUp(SPEED);
-            }
-            else if (gamepad2.a) {
+            } else if (gamepad2.a) {
                 grabber.moveGrabberDown(SPEED);
-            }
-            else {
+            } else {
                 grabber.stopGrabber();
             }
-            }
+
 
 
           /*  if (gamepad2.right_trigger > 0.1) {
@@ -111,23 +109,15 @@ public class Teleop1819 extends LinearOpMode {
             if (gamepad2.left_trigger > 0.1) {
                 grabber.spinOutTime(gamepad2.left_trigger, 5);
             }
-           */if (gamepad2.x) {
+           */
+            if (gamepad2.x) {
                 grabber.spinIn();
-            }
-            else if (gamepad2.b) {
+            } else if (gamepad2.b) {
                 grabber.spinOut();
 
-            }
-            else {
-               grabber.stopSpin();
+            } else {
+                grabber.stopSpin();
             }
         }
     }
-
-
-
-
-
-
-
-
+}

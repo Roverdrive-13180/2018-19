@@ -1,3 +1,4 @@
+//Made by Rohan Gulati and a little bit from Shivy
 package org.firstinspires.ftc.team13180;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -149,7 +150,7 @@ public class PositionTensorFlowObjectDetection {
         ElapsedTime runtime = new ElapsedTime();
 
         runtime.reset();
-        int timeoutMs = 20000;
+        int timeoutMs = 10000;
 
         while ((runtime.milliseconds() < timeoutMs)) {
             recognitions = tensorFlow.getRecognitions();
@@ -183,10 +184,15 @@ public class PositionTensorFlowObjectDetection {
             } else {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
+<<<<<<< HEAD
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,45,10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,90,10000);
+=======
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,40,10000);
                 opMode.sleep(500);
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,80,10000);
                 opMode.sleep(500);
+>>>>>>> de78304913f0e80f8eb56095ff32f3f51ed8a677
 
             }
             opMode.telemetry.update();

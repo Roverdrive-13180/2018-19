@@ -62,7 +62,7 @@ public class Autonomous_Depot extends LinearOpMode {
         tensorFlow.activate();
 
 
-        sleep(2000);
+        sleep(1000);
 
         try {
             // lower lander
@@ -70,12 +70,14 @@ public class Autonomous_Depot extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 24, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 17, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 24, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
             int count = 0;
             String goldLocation = "";
+            positionTFOD.goForTheGold();
 
-            while (opModeIsActive() && count < 5) {
+/*            while (opModeIsActive() && count < 5) {
                 // Get the gold mineral position (Left, Center or Right).
                  goldLocation = tensorFlow.getGoldLocation() ;
 
@@ -127,12 +129,16 @@ public class Autonomous_Depot extends LinearOpMode {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, (count*5)+40,10000);
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30,10000);
             }
+*/
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER,90,10000);
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,10,10000);
+           grabber.spinOut();
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,10,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,205,10000);
+            grabber.moveGrabberUpTime(1, 3);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,5,10000);
+            grabber.moveGrabberDownTime(1,3);
 
-           /* grabber.tiltDown();
-            grabber.spinOutTime(1.0, 3000);*/
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 10, 10000);
-           // grabber.spinOutTime(1.0, 3000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 20, 10000);
 
 
 
