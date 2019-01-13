@@ -17,7 +17,7 @@ public class PositionTensorFlowObjectDetection {
     private RoboNavigator robotNavigator;
     private GoldTensorFlowObjectDetection tensorFlow;
 
-    private double NAVIGATER_POWER = 0.6;
+    private double NAVIGATER_POWER = 0.8;
     private int MIDDLE_VALUE = 640; // Frame is 1280 X 720
     private int TOO_CLOSE_HEIGHT_VALUE = 640; // Frame is 1280 X 720, so height is more that 640 , then it is too close.
 
@@ -184,19 +184,11 @@ public class PositionTensorFlowObjectDetection {
             } else {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
-<<<<<<< HEAD
+
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATER_POWER,20,10000);
-=======
-<<<<<<< HEAD
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,45,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,90,10000);
-=======
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,40,10000);
->>>>>>> 6d58a0f086c369d91749b65f27286f7f6c77d457
                 opMode.sleep(500);
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATER_POWER,40,10000);
                 opMode.sleep(500);
->>>>>>> de78304913f0e80f8eb56095ff32f3f51ed8a677
 
             }
             opMode.telemetry.update();
