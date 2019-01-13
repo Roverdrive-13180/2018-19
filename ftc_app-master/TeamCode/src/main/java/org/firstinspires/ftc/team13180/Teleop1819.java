@@ -28,6 +28,7 @@ public class Teleop1819 extends LinearOpMode {
 
         double multiPlier1 = 1;
         double minPower = 0.1;
+        double SPEED = 1;
 
         while (opModeIsActive()) {
            double motorPower = 0;
@@ -93,18 +94,23 @@ public class Teleop1819 extends LinearOpMode {
 
             //  Grabber
             if (gamepad2.y) {
-                grabber.moveGrabberUp(1);
+                grabber.moveGrabberUp(SPEED);
             }
-            if (gamepad2.a) {
-                grabber.moveGrabberDown(1);
+            else if (gamepad2.a) {
+                grabber.moveGrabberDown(SPEED);
             }
+            else{
+                grabber.stopGrabber();
+            }
+
           /*  if (gamepad2.right_trigger > 0.1) {
                 grabber.spinInTime(gamepad2.right_trigger, 5);
             }
             if (gamepad2.left_trigger > 0.1) {
                 grabber.spinOutTime(gamepad2.left_trigger, 5);
             }
-           */if (gamepad2.x) {
+           */
+          if (gamepad2.x) {
                 grabber.spinIn();
             }
             else if (gamepad2.b) {

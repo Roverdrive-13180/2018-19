@@ -183,9 +183,9 @@ public class PositionTensorFlowObjectDetection {
             } else {
                 // adjustments to find gold
                 opMode.telemetry.addData("Turning right:", "");
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER,40,10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATER_POWER,20,10000);
                 opMode.sleep(500);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,80,10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATER_POWER,40,10000);
                 opMode.sleep(500);
 
             }
