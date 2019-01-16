@@ -79,69 +79,11 @@ public class Autonomous_Depot extends LinearOpMode {
             String goldLocation = "";
             positionTFOD.goForTheGold();
 
-/*            while (opModeIsActive() && count < 5) {
-                // Get the gold mineral position (Left, Center or Right).
-                 goldLocation = tensorFlow.getGoldLocation() ;
-
-                if(goldLocation.equals("Center")){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 60,10000);
-                    telemetry.addData("GoldLoction:", "Center");
-                    break;
-                } else if(goldLocation.equals("Left")) {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 40, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 34,10000);
-                    telemetry.addData("GoldLoction:", "Left");
-                    break;
-                } else if (goldLocation.equals(("Right"))){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 40, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER, 34,10000);
-                    telemetry.addData("GoldLoction:", "Right");
-                    break;
-                }
-                else {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5,10000);
-                    telemetry.addData("GoldLoction:", "Unknown");
-                    count++;
-                }
-
-                telemetry.update();
-            }
-
-
-            // Shutdown Tensorflow as we are not going to use in manual mode.
-            tensorFlow.shutdown();
-
-            // Move to Depot
-            if (goldLocation.equals("")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 5,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 55+70,10000);
-            }
-            else if (goldLocation.equals("Center")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 70,10000);
-            }
-            else if (goldLocation.equals("Left")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 40,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, (count*5)+40,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30,10000);
-            }
-            else if (goldLocation.equals("Right")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 40,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, (count*5)+40,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30,10000);
-            }
-*/
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER,90,10000);
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,30,10000);
-           grabber.spinOut();
-           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,15,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,200,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,10,10000);
-
-
-
-
+           grabber.spinIn();
+           sleep(1000);
+           grabber.stopGrabber();
 
         } catch (Exception e) {
             telemetry.addData("Exception:", e);

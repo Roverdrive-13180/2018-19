@@ -150,9 +150,14 @@ public class PositionTensorFlowObjectDetection {
         ElapsedTime runtime = new ElapsedTime();
 
         runtime.reset();
-        int timeoutMs = 10000;
+        int timeoutMs = 15000;
+
+        int seek_angle = 5;
+        int seek_angle_increment = 2;
+        RoboNavigator.DIRECTION last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
 
         while ((runtime.milliseconds() < timeoutMs)) {
+            opMode.sleep(500);
             recognitions = tensorFlow.getRecognitions();
             Recognition gold = null;
 
@@ -173,26 +178,25 @@ public class PositionTensorFlowObjectDetection {
                 if (gold.getBottom() >= 680) {
                     // Too close hit and exit
                     opMode.telemetry.addData("Too close hit and exit:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 50, 10000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 50, 10000);
                     break;
                 } else {
                     centerTheGold(gold);
-                    // move forward 5 cms
-                    opMode.telemetry.addData("move forward 10 cms:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
+                    // move closer to the gold
+                    opMode.telemetry.addData("move closer by 10 cms:", "");
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
                 }
             } else {
-                // adjustments to find gold
-                opMode.telemetry.addData("Turning right:", "");
+                // adjustments to find gold by oscillating by seek_angle
+                seek_angle = seek_angle * seek_angle_increment;
+                if (last_direction == RoboNavigator.DIRECTION.TURN_LEFT)
+                    last_direction = RoboNavigator.DIRECTION.TURN_RIGHT;
+                else
+                    last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
 
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATER_POWER,20,10000);
-                opMode.sleep(500);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATER_POWER,40,10000);
-                opMode.sleep(500);
-
+                robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER,seek_angle,10000);
             }
             opMode.telemetry.update();
-            opMode.sleep(2000);
         }
 
         opMode.telemetry.addData("Returning from gotForGold:", "");
