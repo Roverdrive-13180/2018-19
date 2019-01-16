@@ -61,20 +61,20 @@ public class RoboNavigator {
     }
 
     public void shiftLeft (double power){
-        topl.setPower(abs(power));
-        topr.setPower(-abs(power));
-        rearl.setPower(-abs(power));
-        rearr.setPower(abs(power));
+        topl.setPower(-abs(power));
+        topr.setPower(abs(power));
+        rearl.setPower(abs(power));
+        rearr.setPower(-abs(power));
         if(logging) {
             opMode.telemetry.addData ("RoboNavigator:", "shiftLeft (power=%f)", power);
         }
     }
 
     public void shiftRight (double power){
-        topl.setPower(-abs(power));
-        topr.setPower(abs(power));
-        rearl.setPower(abs(power));
-        rearr.setPower(-abs(power));
+        topl.setPower(abs(power));
+        topr.setPower(-abs(power));
+        rearl.setPower(-abs(power));
+        rearr.setPower(abs(power));
         if(logging) {
             opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
         }
@@ -192,37 +192,37 @@ public class RoboNavigator {
     private void setTargetPosition(DIRECTION direction, double cms) {
         // Determine new target position, and pass to motor controller
         if (direction == DIRECTION.FORWARD) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
         }
         else if (direction == DIRECTION.BACKWARD) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
         } else if (direction == DIRECTION.SHIFT_RIGHT) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
         } else if (direction == DIRECTION.SHIFT_LEFT) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
         } else if (direction == DIRECTION.TURN_LEFT){
-            topr.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
         }
         else if (direction == DIRECTION.TURN_RIGHT) {
-            topr.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            topl.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            rearr.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            rearl.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
         }
     }
 

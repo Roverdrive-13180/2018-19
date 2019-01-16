@@ -61,12 +61,14 @@ public class Autonomous_Depot extends LinearOpMode {
 
         tensorFlow.activate();
 
-
-        sleep(1000);
+        sleep(200);
 
         try {
             // lower lander
+            robotNavigator.moveForward(0.1);
             lander.encoderDrive(LANDER_POWER, 23, 10000);
+            robotNavigator.stopMotor();
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 3, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 20, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
