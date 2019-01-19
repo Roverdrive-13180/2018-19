@@ -73,7 +73,7 @@ public class Autonomous_Depot extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            positionTFOD.goForTheGold();
+            positionTFOD.goForTheGold(true);
 
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,65,10000);
            // Drop Marquee

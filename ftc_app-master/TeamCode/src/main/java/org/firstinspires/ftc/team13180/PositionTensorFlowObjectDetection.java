@@ -143,7 +143,7 @@ public class PositionTensorFlowObjectDetection {
      *
      * @return
      */
-    public boolean goForTheGold() {
+    public boolean goForTheGold(boolean isDepot) {
         List<Recognition> recognitions = null;
 
         // reset the timeout time and start motion.
@@ -224,8 +224,10 @@ public class PositionTensorFlowObjectDetection {
 
                     robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, seek_angle, 10000);
 
-                    // Turn a little more in the same direction to point to depot
-                    robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, 45,10000);
+                    if (isDepot) {
+                        // Turn a little more in the same direction to point to depot
+                        robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, 45, 10000);
+                    }
                 }
                 break;
             }

@@ -53,7 +53,7 @@ public class TestGoForGold extends LinearOpMode {
             while (opModeIsActive()) {
                 String goldLocation = "";
                 if (gamepad1.a) {
-                    positionTensorFlowObjectDetection.goForTheGold();
+                    positionTensorFlowObjectDetection.goForTheGold(true);
                     telemetry.update();
                     sleep(2000);
                 }

@@ -25,7 +25,7 @@ public class Autonomous_Crater extends LinearOpMode {
     // private ConceptVuforiaNavRoverRuckus vuforia;
     private GoldTensorFlowObjectDetection tensorFlow;
 
-    private double LANDER_POWER = 0.9;
+    private double LANDER_POWER = 1.0;
     private double NAVIGATER_POWER = 0.9;
 
     @Override
@@ -39,6 +39,8 @@ public class Autonomous_Crater extends LinearOpMode {
 
         grabber = new RoboGrabber(this);
         grabber.init();
+
+
 
 
         // Take picture to determine the robot location after landing.
@@ -59,8 +61,6 @@ public class Autonomous_Crater extends LinearOpMode {
 
         tensorFlow.activate();
 
-        sleep(200);
-
         try {
             // lower lander
             robotNavigator.moveForward(0.1);
@@ -68,18 +68,19 @@ public class Autonomous_Crater extends LinearOpMode {
             robotNavigator.stopMotor();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 20, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
+//          robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
-            // Find Gold and hit it.
-            positionTFOD.goForTheGold();
+
+            positionTFOD.goForTheGold(false);
+
 
             // TODO: After hitting the gold, do following if we are on Crator side
             // We can goto Depot or We can park (touch the parking)
             // As this time, we are doing the partial parking on crator side
             // TODO: Measure distance and correct it and test.
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,20,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,50,10000);
             sleep(1000);
 
         } catch (Exception e) {
