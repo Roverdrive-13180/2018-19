@@ -4,21 +4,22 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
- * Created by Shivam Adeshara on 11/24/2018.
+ * Created by Shivam Adeshara on 01/16/2019.
  * This is autonomous program which does following.
- * 1. When init is pressed, it will start motor and pull robot up
+ * 1. When init is pressed, it will initialize lander, graber, navigator and TEnsorflow module
  * 2. Hang the robot on clamp and wait for game to start (i.e. press "Start" only when asked)
- * 3. Robot RoboLander motor will stop and spring tension will bring robot down and clamp should be in middle.
- * 4. Robot will move lelf (check and see if we need to move right) and then move forward
- * 5. Find Gold Mineral position and have logic to  move the robot to Gold mineral (based on Left, Center or Right values)
+ * 3. Robo lander will bring robo down and then move left, forward , right to come our of latch.
+ * 4. Robot will find Gold mineral and hit.
+ * 5. Do partial parking on Crator side.
  */
 
-@Autonomous(name="Autonomous_Crater", group="autonomusGroup1")
+@Autonomous(name="Autonomous_Crator", group="autonomusGroup1")
 public class Autonomous_Crater extends LinearOpMode {
 
     private RoboNavigator robotNavigator;
     private RoboLander lander;
     private RoboGrabber grabber;
+    private PositionTensorFlowObjectDetection positionTFOD;
 
     // TODO: Measure distance
     // private ConceptVuforiaNavRoverRuckus vuforia;
@@ -47,6 +48,10 @@ public class Autonomous_Crater extends LinearOpMode {
         tensorFlow = new GoldTensorFlowObjectDetection();
         tensorFlow.init(this);
 
+        positionTFOD = new PositionTensorFlowObjectDetection(this, robotNavigator, tensorFlow);
+        positionTFOD.init(this);
+
+
         telemetry.addData("Status:", "initialized");
         telemetry.update();
 
@@ -54,77 +59,28 @@ public class Autonomous_Crater extends LinearOpMode {
 
         tensorFlow.activate();
 
-        sleep(2000);
+        sleep(200);
 
         try {
             // lower lander
+            robotNavigator.moveForward(0.1);
             lander.encoderDrive(LANDER_POWER, 23, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 24, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 17, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 24, 10000);
+            robotNavigator.stopMotor();
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 3, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 20, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
+            // Find Gold and hit it.
+            positionTFOD.goForTheGold();
 
-            int count = 0;
-            String goldLocation = "";
-
-            while (opModeIsActive() && count < 5) {
-                // Get the gold mineral position (Left, Center or Right).
-                 goldLocation = tensorFlow.getGoldLocation() ;
-
-                if(goldLocation.equals("Center")){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 60,10000);
-                    telemetry.addData("GoldLoction:", "Center");
-                    break;
-                } else if(goldLocation.equals("Left")) {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 40, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 34,10000);
-                    telemetry.addData("GoldLoction:", "Left");
-                    break;
-                } else if (goldLocation.equals(("Right"))){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 30, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 40, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER, 34,10000);
-                    telemetry.addData("GoldLoction:", "Right");
-                    break;
-                }
-                else {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5,10000);
-                    telemetry.addData("GoldLoction:", "Unknown");
-                    count++;
-                }
-
-                telemetry.update();
-            }
-
-
-            // Shutdown Tensorflow as we are not going to use in manual mode.
-            tensorFlow.shutdown();
-
-            if (goldLocation.equals("")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 5,10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 57,10000);
-            }
-
-            // Move to Depot
-/*            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 20,10000);
-
-            if (goldLocation.equals("")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 100-count*5,10000);
-            }
-            else if (goldLocation.equals("Center")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 100-count*5,10000);
-            }
-            else if (goldLocation.equals("Left")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 100-(40+count*5),10000);
-            }
-            else if (goldLocation.equals("Right")) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 100+(40-count*5),10000);
-            }
-
-            grabber.tiltDown();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 30, 10000);
-*/
+            // TODO: After hitting the gold, do following if we are on Crator side
+            // We can goto Depot or We can park (touch the parking)
+            // As this time, we are doing the partial parking on crator side
+            // TODO: Measure distance and correct it and test.
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,30,10000);
+            sleep(1000);
 
         } catch (Exception e) {
             telemetry.addData("Exception:", e);
