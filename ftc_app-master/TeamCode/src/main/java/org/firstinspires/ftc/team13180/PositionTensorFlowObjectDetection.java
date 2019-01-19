@@ -17,7 +17,7 @@ public class PositionTensorFlowObjectDetection {
     private RoboNavigator robotNavigator;
     private GoldTensorFlowObjectDetection tensorFlow;
 
-    private double NAVIGATER_POWER = 0.8;
+    private double NAVIGATER_POWER = 0.9;
     private int MIDDLE_VALUE = 640; // Frame is 1280 X 720
     private int TOO_CLOSE_HEIGHT_VALUE = 640; // Frame is 1280 X 720, so height is more that 640 , then it is too close.
 
@@ -150,14 +150,16 @@ public class PositionTensorFlowObjectDetection {
         ElapsedTime runtime = new ElapsedTime();
 
         runtime.reset();
-        int timeoutMs = 15000;
+        int timeoutMs = 30000;
 
-        int seek_angle = 5;
-        int seek_angle_increment = 2;
+        int seek_angle = 15;
+        int seek_angle_increment = 10;
         RoboNavigator.DIRECTION last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
 
+        boolean gold_found = false;
+        boolean ready_to_hit = false;
         while ((runtime.milliseconds() < timeoutMs)) {
-            opMode.sleep(500);
+            opMode.sleep(600);
             recognitions = tensorFlow.getRecognitions();
             Recognition gold = null;
 
@@ -165,6 +167,7 @@ public class PositionTensorFlowObjectDetection {
             for (Recognition recognition : recognitions) {
                 if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                     gold = recognition;
+                    gold_found = true;
                     opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d",
                             recognition.getLabel(), recognition.getLeft(), recognition.getTop(), recognition.getRight(), recognition.getBottom(),
                             recognition.getWidth(), recognition.getHeight(), recognition.getConfidence(), recognition.getImageWidth(),
@@ -177,24 +180,54 @@ public class PositionTensorFlowObjectDetection {
             if (gold != null) {
                 if (gold.getBottom() >= 680) {
                     // Too close hit and exit
-                    opMode.telemetry.addData("Too close hit and exit:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 50, 10000);
-                    break;
+                    ready_to_hit = true;
                 } else {
                     centerTheGold(gold);
                     // move closer to the gold
-                    opMode.telemetry.addData("move closer by 10 cms:", "");
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
+                    opMode.telemetry.addData("move closer by 20 cms:", "");
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 20, 10000);
                 }
             } else {
-                // adjustments to find gold by oscillating by seek_angle
-                seek_angle = seek_angle * seek_angle_increment;
-                if (last_direction == RoboNavigator.DIRECTION.TURN_LEFT)
-                    last_direction = RoboNavigator.DIRECTION.TURN_RIGHT;
-                else
-                    last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
+                // We don't have gold in this iteration. Either we are too close or we haven't found gold yet
+                if (gold_found) {
+                    // Likely gold has fallen off the bottom of the frame
+                    ready_to_hit = true;
+                }
+                else {
+                    // We ha=ven't see the gold yet, seek it
+                    // adjustments to find gold by oscillating by seek_angle
+                    if (last_direction == RoboNavigator.DIRECTION.TURN_LEFT) {
+                        last_direction = RoboNavigator.DIRECTION.TURN_RIGHT;
+                        seek_angle = seek_angle + seek_angle_increment;
+                    }
+                    else {
+                        last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
+                        seek_angle = 2 * seek_angle;
+                    }
 
-                robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER,seek_angle,10000);
+                    robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, seek_angle, 10000);
+                }
+            }
+            if (ready_to_hit) {
+                // Too close hit and exit
+                opMode.telemetry.addData("Too close hit and exit:", "");
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 50, 10000);
+
+                // Correction for seek_angle
+                // Flip the direction first
+                if (seek_angle > 15) {
+                    if (last_direction == RoboNavigator.DIRECTION.TURN_LEFT)
+                        last_direction = RoboNavigator.DIRECTION.TURN_RIGHT;
+                    else
+                        last_direction = RoboNavigator.DIRECTION.TURN_LEFT;
+
+                    robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, seek_angle, 10000);
+
+                    // Turn a little more in the same direction to point to depot
+                    robotNavigator.encoderDrive(last_direction, NAVIGATER_POWER, 45,10000);
+                }
+                break;
             }
             opMode.telemetry.update();
         }

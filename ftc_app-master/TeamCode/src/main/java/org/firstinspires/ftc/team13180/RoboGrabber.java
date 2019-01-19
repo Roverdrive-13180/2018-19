@@ -22,7 +22,7 @@ public class RoboGrabber {
     public RoboGrabber (LinearOpMode op) {
         opMode = op;
     }
-    static final double DOWN_SPEED_FACTOR = 0.25;
+    static final double DOWN_SPEED_FACTOR = 0.75;
 
     public void init() {
         spinner = opMode.hardwareMap.get(CRServo.class, "Grabber");

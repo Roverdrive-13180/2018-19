@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TestLander extends LinearOpMode {
 
     private RoboLander lander;
-    static final double SPEED = 0.5;
+    static final double SPEED = 0.9;
 
     @Override
     public void runOpMode() {
@@ -26,12 +26,12 @@ public class TestLander extends LinearOpMode {
             else if (gamepad1.b) {
                 lander.moveUp(SPEED);  // Move up for ms time
             }
-            else if (gamepad1.x) {
+            /*else if (gamepad1.x) {
                 lander.encoderDrive(SPEED, -19, 5000.0);  // Move down (negative distance) 2cms
             }
             else if (gamepad1.y) {
                 lander.encoderDrive(SPEED, 19, 5000.0);  // Move up (positive distance) 2cms
-            }
+            } */
             else {
                 lander.stopMotor();
             }

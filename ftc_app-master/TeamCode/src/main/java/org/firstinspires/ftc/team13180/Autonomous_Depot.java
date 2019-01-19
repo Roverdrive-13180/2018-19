@@ -25,8 +25,8 @@ public class Autonomous_Depot extends LinearOpMode {
     // private ConceptVuforiaNavRoverRuckus vuforia;
     private GoldTensorFlowObjectDetection tensorFlow;
 
-    private double LANDER_POWER = 0.5;
-    private double NAVIGATER_POWER = 0.8;
+    private double LANDER_POWER = 1.0;
+    private double NAVIGATER_POWER = 0.9;
 
     @Override
     public void runOpMode() {
@@ -61,27 +61,25 @@ public class Autonomous_Depot extends LinearOpMode {
 
         tensorFlow.activate();
 
-        sleep(200);
-
         try {
             // lower lander
             robotNavigator.moveForward(0.1);
             lander.encoderDrive(LANDER_POWER, 23, 10000);
             robotNavigator.stopMotor();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 3, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 20, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
+//            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            int count = 0;
-            String goldLocation = "";
             positionTFOD.goForTheGold();
 
-           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER,90,10000);
-           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,30,10000);
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,65,10000);
+           // Drop Marquee
            grabber.spinIn();
+           // Move back
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,20,10000);
            sleep(1000);
            grabber.stopGrabber();
 

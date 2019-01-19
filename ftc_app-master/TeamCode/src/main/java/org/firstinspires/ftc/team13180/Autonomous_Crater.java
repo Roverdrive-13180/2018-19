@@ -25,8 +25,8 @@ public class Autonomous_Crater extends LinearOpMode {
     // private ConceptVuforiaNavRoverRuckus vuforia;
     private GoldTensorFlowObjectDetection tensorFlow;
 
-    private double LANDER_POWER = 0.5;
-    private double NAVIGATER_POWER = 0.8;
+    private double LANDER_POWER = 0.9;
+    private double NAVIGATER_POWER = 0.9;
 
     @Override
     public void runOpMode() {
@@ -66,10 +66,10 @@ public class Autonomous_Crater extends LinearOpMode {
             robotNavigator.moveForward(0.1);
             lander.encoderDrive(LANDER_POWER, 23, 10000);
             robotNavigator.stopMotor();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 3, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 10, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 20, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 10, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
             // Find Gold and hit it.
@@ -79,7 +79,7 @@ public class Autonomous_Crater extends LinearOpMode {
             // We can goto Depot or We can park (touch the parking)
             // As this time, we are doing the partial parking on crator side
             // TODO: Measure distance and correct it and test.
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,30,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,20,10000);
             sleep(1000);
 
         } catch (Exception e) {
