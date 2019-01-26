@@ -50,15 +50,15 @@ public class Teleop1819 extends LinearOpMode {
                 telemetry.addData("Navigator:", "moveForward(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.right_stick_x > minPower) {
-                motorPower = multiPlier1 * gamepad1.right_stick_x;
+            if (gamepad1.x) {
+                motorPower = multiPlier1 * SPEED;
                 robotnav.shiftLeft(abs(motorPower));
                 anySignal = true;
                 telemetry.addData("Navigator:", "shiftLeft(%f):", motorPower);
                 telemetry.update();
             }
-            if (gamepad1.right_stick_x < -minPower) {
-                motorPower = multiPlier1 * gamepad1.right_stick_x;
+            if (gamepad1.b) {
+                motorPower = multiPlier1 * SPEED;
                 robotnav.shiftRight(abs(motorPower));
                 anySignal = true;
                 telemetry.addData("Navigator:", "shiftRight(%f):", motorPower);

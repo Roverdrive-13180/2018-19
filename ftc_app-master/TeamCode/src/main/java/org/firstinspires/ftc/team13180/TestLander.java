@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TestLander extends LinearOpMode {
 
     private RoboLander lander;
-    static final double SPEED = 0.9;
+    static final double SPEED = 1.0;
 
     @Override
     public void runOpMode() {
