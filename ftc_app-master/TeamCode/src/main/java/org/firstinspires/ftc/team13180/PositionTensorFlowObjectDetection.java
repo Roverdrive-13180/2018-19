@@ -262,13 +262,16 @@ public class PositionTensorFlowObjectDetection {
             if (i == 0) {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, distance, 10000);
             }
-            if ( i == 1) {
+            if (i == 1) {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, distance * 2, 10000);
             }
         }
 
         // hit and exit
         opMode.telemetry.addData("Hit and exit:", "");
+        // Move back left 90 degree
+        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
+        // Move forward and hit the gold
         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
         if (isDepot) {
             // Turn a little more in the same direction to point to depot
