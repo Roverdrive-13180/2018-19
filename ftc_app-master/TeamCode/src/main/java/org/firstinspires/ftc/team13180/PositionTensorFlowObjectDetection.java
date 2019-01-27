@@ -238,6 +238,49 @@ public class PositionTensorFlowObjectDetection {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
+    public boolean goForTheGoldNew(boolean isDepot) {
+        List<Recognition> recognitions = null;
+
+        double distance = 40;
+
+        for (int i=0; i < 3; i++) {
+            opMode.sleep(600);
+            recognitions = tensorFlow.getRecognitions();
+            Recognition gold = null;
+            if (recognitions != null && recognitions.size() == 1 && recognitions.get(0).getLabel().equals(LABEL_GOLD_MINERAL)) {
+                gold = recognitions.get(0);
+                opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d",
+                        gold.getLabel(), gold.getLeft(), gold.getTop(), gold.getRight(), gold.getBottom(),
+                        gold.getWidth(), gold.getHeight(), gold.getConfidence(), gold.getImageWidth(),
+                        gold.getImageHeight());
+                break;
+            }
+            if (i == 0) {
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, distance, 10000);
+            }
+            if ( i == 1) {
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, distance * 2, 10000);
+            }
+        }
+
+        // hit and exit
+        opMode.telemetry.addData("Hit and exit:", "");
+        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
+        if (isDepot) {
+            // Turn a little more in the same direction to point to depot
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 45, 10000);
+        }
+
+        opMode.telemetry.addData("Returning from gotForGold:", "");
+        opMode.telemetry.update();
+        return true;
+    }
+
+
     public void centerTheGold(Recognition gold) {
         float centerOfGold = gold.getLeft() + gold.getWidth() / 2;
 
