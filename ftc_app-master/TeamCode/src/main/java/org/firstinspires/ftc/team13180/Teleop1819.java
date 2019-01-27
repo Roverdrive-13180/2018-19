@@ -84,12 +84,14 @@ public class Teleop1819 extends LinearOpMode {
 
             // Lander
             if (gamepad2.dpad_up) {
-                lander.moveUpTime(multiPlier1, 5);
+                lander.moveUp(SPEED);
             }
+            else if (gamepad2.dpad_down) {
+                lander.moveDown(SPEED);
 
-            if (gamepad2.dpad_down) {
-                lander.moveDownTime(multiPlier1, 5);
-
+            }
+            else {
+                lander.stopMotor();
             }
 
             //  Grabber

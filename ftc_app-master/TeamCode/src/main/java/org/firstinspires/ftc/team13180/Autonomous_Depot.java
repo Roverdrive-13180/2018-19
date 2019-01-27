@@ -68,24 +68,24 @@ public class Autonomous_Depot extends LinearOpMode {
             robotNavigator.stopMotor();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
-            // Move forward 15 cms (TODO: measure)
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 15, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 40, 10000);
+
             // Move 90 degree to move camera in front
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            //positionTFOD.goForTheGold(true);
             positionTFOD.goForTheGoldNew(true);
 
-           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,65,10000);
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,55,10000);
+
            // Drop Marquee
            grabber.spinIn();
+
            // Move back
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,20,10000);
            sleep(1000);
            grabber.stopGrabber();
+
 
         } catch (Exception e) {
             telemetry.addData("Exception:", e);

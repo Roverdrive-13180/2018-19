@@ -247,9 +247,10 @@ public class PositionTensorFlowObjectDetection {
 
         double distance = 40;
 
-        for (int i=0; i < 3; i++) {
-            opMode.sleep(600);
-            recognitions = tensorFlow.getRecognitions();
+        int i = 0;
+        for (i = 0; i < 3; i++) {
+            opMode.sleep(2000);
+            recognitions = tensorFlow.getUpdatedRecognitions();
             Recognition gold = null;
             if (recognitions != null && recognitions.size() == 1 && recognitions.get(0).getLabel().equals(LABEL_GOLD_MINERAL)) {
                 gold = recognitions.get(0);
@@ -264,18 +265,31 @@ public class PositionTensorFlowObjectDetection {
             }
             if (i == 1) {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, distance * 2, 10000);
+                i++;
+                break;
             }
         }
 
         // hit and exit
         opMode.telemetry.addData("Hit and exit:", "");
+
         // Move back left 90 degree
         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
+
         // Move forward and hit the gold
         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
+
         if (isDepot) {
-            // Turn a little more in the same direction to point to depot
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 45, 10000);
+
+            // Turn to point to depot
+            if (i == 1) {
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 45, 10000);
+            }
+            else if (i == 2) {
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 35, 10000);
+            }
+
         }
 
         opMode.telemetry.addData("Returning from gotForGold:", "");

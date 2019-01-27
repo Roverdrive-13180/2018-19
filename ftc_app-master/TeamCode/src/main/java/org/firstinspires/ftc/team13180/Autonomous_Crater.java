@@ -68,12 +68,13 @@ public class Autonomous_Crater extends LinearOpMode {
             robotNavigator.stopMotor();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
-//          robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 15, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 40, 10000);
+
+            // Move 90 degree to move camera in front
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            positionTFOD.goForTheGold(false);
+            positionTFOD.goForTheGoldNew(true);
 
 
             // TODO: After hitting the gold, do following if we are on Crator side
