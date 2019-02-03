@@ -290,14 +290,20 @@ public class PositionTensorFlowObjectDetection {
             }
             else if (i == 2) {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 35, 10000);
+
             }
 
         } else{
             //Turn  Right 90 degrees
 
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 90, 10000);
+            if( i == 0) {
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
+            }
             //Move Backward to hit gold
+
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
+
 
         }
 
