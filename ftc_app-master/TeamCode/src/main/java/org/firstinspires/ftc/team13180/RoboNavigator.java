@@ -153,7 +153,7 @@ public class RoboNavigator {
      *  3) Driver stops the opmode running.
      *
      */
-    private static  final double ROBO_DIAMETER_CM = 64;
+    private static  final double ROBO_DIAMETER_CM = 65;
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.0 ;     // For figuring circumference

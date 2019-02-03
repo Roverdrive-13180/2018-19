@@ -264,7 +264,7 @@ public class PositionTensorFlowObjectDetection {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, distance, 10000);
             }
             if (i == 1) {
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, distance * 2, 10000);
+                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, distance * 2 -5 , 10000);
                 i++;
                 break;
             }
@@ -273,13 +273,15 @@ public class PositionTensorFlowObjectDetection {
         // hit and exit
         opMode.telemetry.addData("Hit and exit:", "");
 
-        // Move back left 90 degree
-        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
-
-        // Move forward and hit the gold
-        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
 
         if (isDepot) {
+            // Move back left 90 degree
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
+
+            // Move forward and hit the gold
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
+
+
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 45, 10000);
 
             // Turn to point to depot
@@ -289,6 +291,13 @@ public class PositionTensorFlowObjectDetection {
             else if (i == 2) {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 35, 10000);
             }
+
+        } else{
+            //Turn  Right 90 degrees
+
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 90, 10000);
+            //Move Backward to hit gold
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
 
         }
 
