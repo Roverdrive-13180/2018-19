@@ -254,7 +254,7 @@ public class PositionTensorFlowObjectDetection {
             Recognition gold = null;
             if (recognitions != null && recognitions.size() == 1 && recognitions.get(0).getLabel().equals(LABEL_GOLD_MINERAL)) {
                 gold = recognitions.get(0);
-                opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d",
+                opMode.telemetry.addData("Found Gold:", "Label=%s L=%f T=%f R=%f B=%f W=%f H=%f C=%f ImgW=%d ImgH=%d", //FOUND THE GOLD HERE, DETECTED AND BREAK, "" IS WHATEVER IT IS RN
                         gold.getLabel(), gold.getLeft(), gold.getTop(), gold.getRight(), gold.getBottom(),
                         gold.getWidth(), gold.getHeight(), gold.getConfidence(), gold.getImageWidth(),
                         gold.getImageHeight());
@@ -277,6 +277,7 @@ public class PositionTensorFlowObjectDetection {
         if (isDepot) {
             // Move back left 90 degree
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
+
 
             // Move forward and hit the gold
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);

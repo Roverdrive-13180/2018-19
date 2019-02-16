@@ -12,9 +12,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * 5. Do partial parking on Crator side.
  */
 
-@Autonomous(name="Autonomous_Crator", group="autonomusGroup1")
-public class Autonomous_Crater extends LinearOpMode {
-
+@Autonomous(name="Lander", group="autonomusGroup1")
+public class Lander extends LinearOpMode{
     private RoboNavigator robotNavigator;
     private RoboLander lander;
     private RoboGrabber grabber;
@@ -68,7 +67,7 @@ public class Autonomous_Crater extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 15, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 40, 10000);
-
+/*
             // Move 90 degree to move camera in front
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
@@ -83,10 +82,10 @@ public class Autonomous_Crater extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,47,10000);
 
             sleep(1000);
-
+*/
         } catch (Exception e) {
             telemetry.addData("Exception:", e);
             telemetry.update();
         }
-        }
     }
+}
