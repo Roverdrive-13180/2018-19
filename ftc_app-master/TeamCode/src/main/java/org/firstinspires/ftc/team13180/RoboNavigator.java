@@ -79,6 +79,26 @@ public class RoboNavigator {
             opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
         }
     }
+    public void diagFRight (double power){
+        topl.setPower(abs(power));
+        rearr.setPower(abs(power));
+
+    }
+    public void diagFLeft (double power){
+        topr.setPower(abs(power));
+        rearl.setPower(abs(power));
+
+    }
+    public void diagBRight (double power){
+        topl.setPower(-abs(power));
+        rearr.setPower(-abs(power));
+
+    }
+    public void diagBLeft (double power){
+        topr.setPower(-abs(power));
+        rearl.setPower(-abs(power));
+
+    }
 
     public void stopMotor() {
         topl.setPower(0);
