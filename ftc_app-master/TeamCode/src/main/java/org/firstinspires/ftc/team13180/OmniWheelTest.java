@@ -52,13 +52,17 @@ public class OmniWheelTest extends LinearOpMode {
             double v3 = r * Math.sin(robotAngle) + rightX;
             double v4 = r * Math.cos(robotAngle) - rightX;
 
-            telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
+            if(v1 != 0 && v2 != 0 && v3 != 0 && v4 != 0) {
+                telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
+                telemetry.update();
+            }
+
 
             topl.setPower(v1);
             topr.setPower(v2);
             rearl.setPower(v3);
             rearr.setPower(v4);
-            telemetry.update();
+
         }
     }
 }
