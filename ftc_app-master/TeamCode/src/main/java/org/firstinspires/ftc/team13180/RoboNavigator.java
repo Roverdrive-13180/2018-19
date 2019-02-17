@@ -82,21 +82,29 @@ public class RoboNavigator {
     public void diaganolFrontRight (double power){
         topl.setPower(abs(power));
         rearr.setPower(abs(power));
+        topr.setPower(.25*abs(power));
+        rearl.setPower(.25*abs(power));
     }
 
     public void diagonalFrontLeft (double power){
         topr.setPower(abs(power));
         rearl.setPower(abs(power));
+        topl.setPower(.25*abs(power));
+        rearr.setPower(.25*abs(power));
     }
 
     public void diagonalBackRight (double power){
         topl.setPower(-abs(power));
         rearr.setPower(-abs(power));
+        topr.setPower(.25*-abs(power));
+        rearl.setPower(.25*-abs(power));
     }
 
     public void diagonalBackLeft (double power){
         topr.setPower(-abs(power));
         rearl.setPower(-abs(power));
+        topl.setPower(.25*-abs(power));
+        rearr.setPower(.25*-abs(power));
     }
 
     public void stopMotor() {
