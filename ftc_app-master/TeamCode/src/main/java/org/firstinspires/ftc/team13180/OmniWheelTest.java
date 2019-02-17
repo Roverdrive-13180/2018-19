@@ -35,8 +35,7 @@ public class OmniWheelTest extends LinearOpMode {
         topr = hardwareMap.get(DcMotor.class, "Topr");
         rearl = hardwareMap.get(DcMotor.class, "Rearl");
         rearr = hardwareMap.get(DcMotor.class, "Rearr");
-        topr.setDirection(
-                DcMotor.Direction.REVERSE);
+        topr.setDirection(DcMotor.Direction.REVERSE);
         rearr.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("OmniWheel:", "Initialized");

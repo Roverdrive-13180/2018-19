@@ -79,25 +79,24 @@ public class RoboNavigator {
             opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
         }
     }
-    public void diagFRight (double power){
+    public void diaganolFrontRight (double power){
         topl.setPower(abs(power));
         rearr.setPower(abs(power));
-
     }
-    public void diagFLeft (double power){
+
+    public void diagonalFrontLeft (double power){
         topr.setPower(abs(power));
         rearl.setPower(abs(power));
-
     }
-    public void diagBRight (double power){
+
+    public void diagonalBackRight (double power){
         topl.setPower(-abs(power));
         rearr.setPower(-abs(power));
-
     }
-    public void diagBLeft (double power){
+
+    public void diagonalBackLeft (double power){
         topr.setPower(-abs(power));
         rearl.setPower(-abs(power));
-
     }
 
     public void stopMotor() {
