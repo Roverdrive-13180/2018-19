@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 /**
@@ -10,6 +11,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  */
 @TeleOp(name="OmniWheelTest", group="manualmode")
 public class OmniWheelTest extends LinearOpMode {
+    private DcMotor topl;
+    private DcMotor topr;
+    private DcMotor rearl;
+    private DcMotor rearr;
 
     /*
      * The mecanum drivetrain involves four separate motors that spin in
@@ -18,41 +23,42 @@ public class OmniWheelTest extends LinearOpMode {
      */
 
     // declare and initialize four DcMotors.
-    private DcMotor topl;
-    private DcMotor topr;
-    private DcMotor rearl;
-    private DcMotor rearr;
-    private LinearOpMode opMode;
-    private OpMode v;
+
+    boolean logging = true;
 
     @Override
     public void runOpMode() {
 
         // Name strings must match up with the config on the Robot Controller
         // app.
-        topl = opMode.hardwareMap.get(DcMotor.class, "Topl");
-        topr = opMode.hardwareMap.get(DcMotor.class, "Topr");
-        rearl = opMode.hardwareMap.get(DcMotor.class, "Rearl");
-        rearr = opMode.hardwareMap.get(DcMotor.class, "Rearr");
-        topr.setDirection(DcMotor.Direction.REVERSE);
+        topl = hardwareMap.get(DcMotor.class, "Topl");
+        topr = hardwareMap.get(DcMotor.class, "Topr");
+        rearl = hardwareMap.get(DcMotor.class, "Rearl");
+        rearr = hardwareMap.get(DcMotor.class, "Rearr");
+        topr.setDirection(
+                DcMotor.Direction.REVERSE);
         rearr.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addData("OmniWheel:", "Initialized");
+
 
         waitForStart();
         while (opModeIsActive()) {
+            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = gamepad1.right_stick_x;
+            double v1 = r * Math.cos(robotAngle) + rightX;
+            double v2 = r * Math.sin(robotAngle) - rightX;
+            double v3 = r * Math.sin(robotAngle) + rightX;
+            double v4 = r * Math.cos(robotAngle) - rightX;
 
-
-            double r = Math.hypot(v.gamepad1.left_stick_x, v.gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(v.gamepad1.left_stick_y, v.gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = v.gamepad1.right_stick_x;
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
+            telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
 
             topl.setPower(v1);
             topr.setPower(v2);
             rearl.setPower(v3);
             rearr.setPower(v4);
+            telemetry.update();
         }
     }
 }
