@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * 5. Do partial parking on Crator side.
  */
 
-@Autonomous(name="Autonomous_Crator", group="autonomusGroup1")
+@Autonomous(name="Autonomous_Crater", group="autonomusGroup1")
 public class Autonomous_Crater extends LinearOpMode {
 
     private RoboNavigator robotNavigator;
@@ -90,3 +90,4 @@ public class Autonomous_Crater extends LinearOpMode {
         }
         }
     }
+;

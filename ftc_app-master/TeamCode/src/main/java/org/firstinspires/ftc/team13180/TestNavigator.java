@@ -40,6 +40,18 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.left_bumper) {
                 robotnav.turnLeft(SPEED);
             }
+            else if (gamepad2.y){
+                robotnav.diaganolFrontRight(SPEED);
+            }
+            else if (gamepad2.x){
+                robotnav.diagonalFrontLeft(SPEED);
+            }
+            else if (gamepad2.b){
+                robotnav.diagonalBackRight(SPEED);
+            }
+            else if (gamepad2.a){
+                robotnav.diagonalBackLeft(SPEED);
+            }
 
 
             // EncoderMode
