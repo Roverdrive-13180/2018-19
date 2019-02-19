@@ -40,6 +40,17 @@ public class TestGrabber extends LinearOpMode{
             else {
                 grabber.stopSpin();
             }
+            if(gamepad1.dpad_down){
+                grabber.moveWinchDown(SPEED);
+            }
+            else if(gamepad1.dpad_up){
+                grabber.moveWinchUp(SPEED);
+            }
+            
+            else{
+                grabber.stopWinch(0);
+            }
+
 
             }
         }

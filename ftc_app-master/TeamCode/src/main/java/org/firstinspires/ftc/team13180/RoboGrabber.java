@@ -18,6 +18,7 @@ public class RoboGrabber {
     private LinearOpMode opMode;
 
     private DcMotor grabber;
+    private DcMotor wheel ;
     private CRServo spinner;
     public RoboGrabber (LinearOpMode op) {
         opMode = op;
@@ -29,17 +30,29 @@ public class RoboGrabber {
         stopSpin();
         grabber = opMode.hardwareMap.get(DcMotor.class, "Winch");
         stopGrabber();
+        wheel = opMode.hardwareMap.get(DcMotor.class,"Wheel");
 
         // Set up Tilt in up position
     }
 
     public void moveGrabberUp(double power) {
 
-        grabber.setPower(abs(power));
+        grabber.setPower(-abs(power));
     }
 
     public void moveGrabberDown(double power) {
-        grabber.setPower(-abs(power * DOWN_SPEED_FACTOR));
+        grabber.setPower(abs(power * DOWN_SPEED_FACTOR));
+    }
+    public void moveWinchDown (double power) {
+
+        wheel.setPower(-abs(power));
+    }
+    public void moveWinchUp (double power){
+
+        wheel.setPower(abs(power));
+    }
+    public void stopWinch(double power){
+        wheel.setPower(0);
     }
 
     public void moveGrabberUpTime(double power, long time) {
