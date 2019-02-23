@@ -65,7 +65,7 @@ public class FullAutonomousCrater extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            fullpositionTFOD.goForTheGoldNew(false,true);
+            fullpositionTFOD.goForTheGoldNew(false);
 
 
             // TODO: After hitting the gold, do following if we are on Crator side

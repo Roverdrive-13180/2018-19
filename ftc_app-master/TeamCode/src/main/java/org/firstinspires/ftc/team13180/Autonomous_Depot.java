@@ -74,7 +74,7 @@ public class Autonomous_Depot extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATER_POWER, 90, 10000);
 
 
-            positionTFOD.goForTheGoldNew(true,false);
+            positionTFOD.goForTheGoldNew(true);
 
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,55,10000);
 

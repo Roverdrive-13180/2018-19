@@ -243,7 +243,7 @@ public class PositionTensorFlowObjectDetection {
      *
      * @return
      */
-    public boolean goForTheGoldNew(boolean isDepot, boolean full) {
+    public int goForTheGoldNew(boolean isDepot) {
         List<Recognition> recognitions = null;
 
         double distance = 40;
@@ -295,38 +295,7 @@ public class PositionTensorFlowObjectDetection {
 
             }
 
-        } else{
-            //Turn  Right 90 degrees
-            if(full){
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 90, 10000);
-                if (i == 0) {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-                }
-                //Move Backward to hit gold
-
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 25, 10000);
-                if (i == 0) {
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATER_POWER, 5, 10000);
-                }
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 90, 10000);
-                double m=36.83; //distance between each material (14.5*2.54)
-                double m2=m*2;
-                double m3=m*3;
-                if(i==0){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 73.66, 10000);
-
-                }
-                if(i==1){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 110.49, 10000);
-
-                }
-                if(i==2){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 36.83, 10000);
-                }
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 45, 10000);
-                robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 152.4, 10000);
-            }
+        }
             else {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATER_POWER, 90, 10000);
                 if (i == 0) {
@@ -337,11 +306,11 @@ public class PositionTensorFlowObjectDetection {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
             }
 
-        }
+
 
         opMode.telemetry.addData("Returning from gotForGold:", "");
         opMode.telemetry.update();
-        return true;
+        return i;
 
     }
 
