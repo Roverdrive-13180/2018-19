@@ -26,7 +26,8 @@ public class Full_Autonomous_Crater extends LinearOpMode {
 
     private double LANDER_POWER = 1.0;
     private double NAVIGATER_POWER = 0.9;
-
+    private double GrabberWinchPower=1;
+    private double armPower=1;
     @Override
     public void runOpMode() {
 
@@ -75,41 +76,55 @@ public class Full_Autonomous_Crater extends LinearOpMode {
 
             int i=positionTFOD.goForTheGoldNew(false);
         if(fullAuto){
+                    //moves back from hitting gold
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
-                    //moves back after hitting gold
+
                     if (i == 0) {
+                        //adjustment if gold in the middle
                         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-                        //adjustment if in middle
                     }
+                    //become parallel to material line and lander to go towards wall
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
-                    // turns right to our depot area, parallel to lander
-                    double m=36.83; //distance between each material is 14.5 (14.5x*2.54)
+                   //distance between each material = 14.5, so 14.5in *2.54 = 36.83cm
+                    double m=36.83;
                     double m2=m*2;
                     double m3=m*3;
+                    //need to go double the distance to get to point needed
                     if(i==0){
                         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m2, 10000);
-                        //need to go towards the right, so will have to go forward 36.83cm*2 or 14.5 in *2
+
 
                     }
-                    if(i==1){
+                    //need to go triple the distance since right mineral is the farthest
+                    else if(i==1){
                         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m3, 10000);
                         //need to go towards the right, so will need to have to go forward 36.83 cm*3 (longest dist)
 
                     }
-                    if(i==2){
+                    //need to go shortest distance since closest to targeted area
+                    else if(i==2){
                         robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m, 10000);
                         //need to go towards the right, so will need to go forward 36.83cm (closest distance)
                     }
+                    //turns towards depot
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 45, 10000);
-                    //turns to face depot
+                    //bangs into wall to align
+                    robotNavigator.shiftRightTime(NAVIGATER_POWER,50000);
+                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 2, 10000);
+                    //zoom zoom to depot
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 152.4, 10000);
-                    //goes towards and *should* end up right in front of depot
-                    grabber.spinIn(); //drop marker
+                    //drop marker
+                    grabber.spinIn();
+                    sleep(5000);
+                    grabber.stopGrabber();
+                    //turn 180 degrees
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,180,10000);
+                    //zoom zoom back
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 170, 10000);
-                    //move grabber up
-                    //extend grabber fully
-                    //move grabber down
+                    //bring grabber up, extend the telescopic arm, bring it down into crater
+                grabber.moveGrabberUp(armPower);
+                grabber.moveWinchUp(GrabberWinchPower);
+                grabber.moveGrabberDown(armPower);
 
                 }
                 else {

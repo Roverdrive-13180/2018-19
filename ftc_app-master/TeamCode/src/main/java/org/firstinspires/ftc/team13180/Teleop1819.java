@@ -127,6 +127,16 @@ public class Teleop1819 extends LinearOpMode {
             } else {
                 grabber.stopSpin();
             }
+            if(gamepad2.right_stick_y>minPower){
+                grabber.moveWinchUp(SPEED);
+
+            }
+            else if(gamepad2.right_stick_y <-minPower){
+                grabber.moveWinchDown(SPEED);
+            }
+            else{
+                grabber.stopWinch(0);
+            }
         }
     }
 }
