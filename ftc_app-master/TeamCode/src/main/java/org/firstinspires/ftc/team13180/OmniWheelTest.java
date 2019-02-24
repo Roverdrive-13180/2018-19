@@ -43,26 +43,30 @@ public class OmniWheelTest extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = gamepad1.right_stick_x;
-            double v1 = r * Math.cos(robotAngle) + rightX;
-            double v2 = r * Math.sin(robotAngle) - rightX;
-            double v3 = r * Math.sin(robotAngle) + rightX;
-            double v4 = r * Math.cos(robotAngle) - rightX;
-
-            if(v1 != 0 && v2 != 0 && v3 != 0 && v4 != 0) {
-                telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
-                telemetry.update();
-            }
-
-
-            topl.setPower(v1);
-            topr.setPower(v2);
-            rearl.setPower(v3);
-            rearr.setPower(v4);
+            omniWheelDrive();
 
         }
+    }
+
+    private void omniWheelDrive() {
+        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+        double rightX = gamepad1.right_stick_x;
+        double v1 = r * Math.cos(robotAngle) + rightX;
+        double v2 = r * Math.sin(robotAngle) - rightX;
+        double v3 = r * Math.sin(robotAngle) + rightX;
+        double v4 = r * Math.cos(robotAngle) - rightX;
+
+        if(v1 != 0 && v2 != 0 && v3 != 0 && v4 != 0) {
+            telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
+            telemetry.update();
+        }
+
+
+        topl.setPower(v1);
+        topr.setPower(v2);
+        rearl.setPower(v3);
+        rearr.setPower(v4);
     }
 }
 

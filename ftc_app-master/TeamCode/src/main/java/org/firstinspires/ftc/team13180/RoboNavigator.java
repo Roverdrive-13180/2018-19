@@ -136,6 +136,23 @@ public class RoboNavigator {
         }
     }
 
+    public void omniWheelDrive(double r, double robotAngle, double rightX) {
+        double v1 = r * Math.cos(robotAngle) + rightX;
+        double v2 = r * Math.sin(robotAngle) - rightX;
+        double v3 = r * Math.sin(robotAngle) + rightX;
+        double v4 = r * Math.cos(robotAngle) - rightX;
+
+        if(v1 != 0 && v2 != 0 && v3 != 0 && v4 != 0) {
+            opMode.telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
+        }
+
+
+        topl.setPower(v1);
+        topr.setPower(v2);
+        rearl.setPower(v3);
+        rearr.setPower(v4);
+    }
+
     public void moveForwardTime(double power, long time) {
         moveForward(power);
         opMode.sleep(time);

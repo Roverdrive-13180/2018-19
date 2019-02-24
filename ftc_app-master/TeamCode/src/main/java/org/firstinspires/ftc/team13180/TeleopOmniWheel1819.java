@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.team13180;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
 
 import static java.lang.Math.abs;
 
 
-@TeleOp(name="Teleop1819", group="manual")
-public class Teleop1819 extends LinearOpMode {
+@TeleOp(name="TeleopOmniWheel1819", group="manual")
+public class TeleopOmniWheel1819 extends LinearOpMode {
 
     private RoboNavigator robotnav;
     private RoboLander lander;
@@ -35,7 +33,7 @@ public class Teleop1819 extends LinearOpMode {
             boolean anySignal = false;
 
             // Navigator
-
+            /*
             if (gamepad1.left_stick_y > minPower) {
                 motorPower = multiPlier1 * gamepad1.left_stick_y;
                 robotnav.moveBackward(abs(motorPower));
@@ -78,14 +76,13 @@ public class Teleop1819 extends LinearOpMode {
                 telemetry.addData("Navigator:", "turnRight`x`(%f):", motorPower);
                 telemetry.update();
             }
+            */
 
-            // TODO :
-            /*
             double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
             double rightX = gamepad1.right_stick_x;
             robotnav.omniWheelDrive(r, robotAngle, rightX);
-            */
+            anySignal = true;
 
             if (!anySignal)
                 robotnav.stopMotor();
