@@ -123,14 +123,15 @@ public class TeleopOmniWheel1819 extends LinearOpMode {
                 grabber.spinOut();
 
             } else {
+
                 grabber.stopSpin();
 
             }
-            if(gamepad2.right_stick_y>minPower){
+            if(gamepad2.left_bumper){
                 grabber.moveWinchUp(SPEED);
 
             }
-            else if(gamepad2.right_stick_y <-minPower){
+            else if(gamepad2.right_bumper){
                 grabber.moveWinchDown(SPEED);
             }
             else{
