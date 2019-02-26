@@ -65,6 +65,7 @@ public class Full_Autonomous_Depot extends LinearOpMode {
         try {
             // lower lander
             robotNavigator.moveForward(0.1);
+            grabber.moveGrabberUpTime(1,500);
             lander.encoderDrive(LANDER_POWER, 23, 10000);
             robotNavigator.stopMotor();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, 0.5, 2, 10000);
