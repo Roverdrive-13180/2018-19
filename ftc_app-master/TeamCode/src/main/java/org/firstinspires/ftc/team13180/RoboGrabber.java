@@ -66,6 +66,11 @@ public class RoboGrabber {
         opMode.sleep(time);
         stopGrabber();
     }
+    public void moveWinchDownTime(double power, long time) {
+        moveWinchDown(power);
+        opMode.sleep(time);
+        stopWinch(0);
+    }
 
 
     public void stopGrabber() {

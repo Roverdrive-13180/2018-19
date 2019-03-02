@@ -80,7 +80,7 @@ public class Autonomous_Depot extends LinearOpMode {
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATER_POWER,55,10000);
 
            // Drop Marquee
-           grabber.spinIn();
+           grabber.spinOut();
 
            // Move back
            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,20,10000);

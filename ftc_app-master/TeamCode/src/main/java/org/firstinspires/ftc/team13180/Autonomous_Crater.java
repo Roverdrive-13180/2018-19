@@ -32,7 +32,6 @@ public class Autonomous_Crater extends LinearOpMode {
 
         robotNavigator = new RoboNavigator(this);
         robotNavigator.init();
-        boolean FullAuto = false;
         lander = new RoboLander(this);
         lander.init();
 
@@ -77,56 +76,18 @@ public class Autonomous_Crater extends LinearOpMode {
 
 
             int i=positionTFOD.goForTheGoldNew(false);
-        if(FullAuto){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 25, 10000);
-                    //moves back after hitting gold
-                    if (i == 0) {
-                        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATER_POWER, 5, 10000);
-                        //adjustment if in middle
-                    }
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 90, 10000);
-                    // turns right to our depot area, parallel to lander
-                    double m=36.83; //distance between each material is 14.5 (14.5x*2.54)
-                    double m2=m*2;
-                    double m3=m*3;
-                    if(i==0){
-                        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m2, 10000);
-                        //need to go towards the right, so will have to go forward 36.83cm*2 or 14.5 in *2
-
-                    }
-                    if(i==1){
-                        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m3, 10000);
-                        //need to go towards the right, so will need to have to go forward 36.83 cm*3 (longest dist)
-
-                    }
-                    if(i==2){
-                        robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, m, 10000);
-                        //need to go towards the right, so will need to go forward 36.83cm (closest distance)
-                    }
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATER_POWER, 45, 10000);
-                    //turns to face depot
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 152.4, 10000);
-                    //goes towards and *should* end up right in front of depot
-                    grabber.spinIn(); //drop marker
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATER_POWER,180,10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 170, 10000);
-                    //move grabber up
-                    //extend grabber fully
-                    //move grabber down
-
-                }
-                else {
 
             // TODO: After hitting the gold, do following if we are on Crator side
             // We can goto Depot or We can park (touch the parking)
             // As this time, we are doing the partial parking on crator side
             // TODO: Measure distance and correct it and test.
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATER_POWER, 47, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 50, 10000);
+            grabber.moveWinchDownTime(1,3000);
+            grabber.spinOut();
 
             sleep(1000);
-        }
         } catch (Exception e) {
-            telemetry.addData("Exception:", e);
+            telemetry.addData("Exception:"  , e);
             telemetry.update();
         }
         }

@@ -30,6 +30,7 @@ public class Teleop1819 extends LinearOpMode {
         double minPower = 0.1;
         double SPEED = 1;
 
+
         while (opModeIsActive()) {
             double motorPower = 0;
             boolean anySignal = false;
@@ -102,12 +103,18 @@ public class Teleop1819 extends LinearOpMode {
                 lander.stopMotor();
             }
 
+
             //  Grabber
             if (gamepad2.y) {
                 grabber.moveGrabberUp(SPEED);
             } else if (gamepad2.a) {
+               grabber.moveGrabberDown(0.5);
+             } else if (gamepad2.dpad_right) {
                 grabber.moveGrabberDown(SPEED);
-            } else {
+            } else if (gamepad2.dpad_left){
+                grabber.moveGrabberUp(0.5);
+            }
+            else {
                 grabber.stopGrabber();
             }
 

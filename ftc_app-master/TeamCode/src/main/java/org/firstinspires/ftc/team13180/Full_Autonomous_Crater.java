@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.team13180;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 
 @Autonomous(name="Full_Autonomous_Crater", group="autonomusGroup1")
+@Disabled
 public class Full_Autonomous_Crater extends LinearOpMode {
 
     private RoboNavigator robotNavigator;
