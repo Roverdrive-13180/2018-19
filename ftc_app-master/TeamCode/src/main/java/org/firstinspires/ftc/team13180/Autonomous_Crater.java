@@ -84,7 +84,7 @@ public class Autonomous_Crater extends LinearOpMode {
             grabber.moveGrabberUpTime(1, 1000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 50, 10000);
             grabber.moveWinchDownTime(0.5,1000);
-            grabber.moveGrabberDownTime(0.5, 1000);
+            grabber.moveGrabberDownTime(0.8, 1000);
             grabber.spinOut();
 
             sleep(1000);
