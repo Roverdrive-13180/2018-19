@@ -81,8 +81,10 @@ public class Autonomous_Crater extends LinearOpMode {
             // We can goto Depot or We can park (touch the parking)
             // As this time, we are doing the partial parking on crator side
             // TODO: Measure distance and correct it and test.
+            grabber.moveGrabberUpTime(1, 1000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATER_POWER, 50, 10000);
             grabber.moveWinchDownTime(1,3000);
+            grabber.moveGrabberDownTime(1, 1000);
             grabber.spinOut();
 
             sleep(1000);
