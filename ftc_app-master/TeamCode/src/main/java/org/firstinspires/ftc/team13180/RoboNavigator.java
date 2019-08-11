@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.abs;
 
 /**
- * Created by Shivam Adeshara on 12/24/2017.
+ * Created by Team Roverdrive on 12/24/2017.
  */
 
 public class RoboNavigator {
@@ -106,7 +106,31 @@ public class RoboNavigator {
         topl.setPower(.25*-abs(power));
         rearr.setPower(.25*-abs(power));
     }
+    public void AccMecanum(double x,double y,double turn){
+        double angle=Math.atan(y/x);
+        double mult=Math.sqrt(x*x+y*y);
+        double PosP=getUnitCirclePos(angle,mult);
+        double NegP=getUnitCircleNeg(angle,mult);
+        PosP+=turn;
+        NegP+=turn;
+        if(Math.abs(PosP)>1 || Math.abs(NegP)>1){
+            PosP=PosP/(Math.max(PosP,NegP));
+            NegP=NegP/(Math.max(PosP,NegP));
 
+        }
+        topl.setPower(PosP);
+        rearl.setPower(NegP);
+        topr.setPower(NegP);
+        rearr.setPower(PosP);
+    }
+    private double getUnitCircleNeg(double angle,double mult){
+        double p=Math.sin(angle-(0.25*Math.PI));
+        return p*mult;
+    }
+    private double getUnitCirclePos(double angle,double mult){
+        double p=Math.sin(angle+(0.25*Math.PI));
+        return p*mult;
+    }
     public void stopMotor() {
         topl.setPower(0);
         topr.setPower(0);
