@@ -22,24 +22,34 @@ public class TestNavigator extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            if (gamepad1.y) {
-                robotnav.moveForward(SPEED);
+            double rx=gamepad1.left_stick_x;
+            double ry=gamepad1.left_stick_y;
+            double r2x=gamepad2.left_stick_x;
+            double r2y=gamepad2.left_stick_y;
+            double turn=gamepad2.right_stick_x;
+            if (ry>0 && ry>Math.abs(rx)) {
+                robotnav.moveForward(SPEED*ry);
             }
-            else if (gamepad1.a) {
-                robotnav.moveBackward(SPEED);
+            else if (ry<0 && Math.abs(ry)>Math.abs(rx)) {
+                robotnav.moveBackward(SPEED*ry*-1);
             }
-            else if (gamepad1.b) {
-                robotnav.shiftRight(SPEED);
+            else if (rx>0 && rx>Math.abs(ry)) {
+                robotnav.shiftRight(SPEED* rx);
             }
-            else if (gamepad1.x) {
-                robotnav.shiftLeft(SPEED);
+            else if (rx<0 && Math.abs(rx)>Math.abs(ry)) {
+                robotnav.shiftLeft(SPEED*rx*-1);
             }
             else if (gamepad1.right_bumper) {
-                robotnav.turnRight(SPEED);
-            }
-            else if (gamepad1.left_bumper) {
                 robotnav.turnLeft(SPEED);
             }
+            else if (gamepad1.left_bumper) {
+                robotnav.turnRight(SPEED);
+            }
+
+            else if(Math.abs(r2x)>0 || Math.abs(r2y)>0){   //can go any direction 360 degrees based on controller input
+                robotnav.AccMecanum(r2x,r2y,turn);
+            }
+            /*
             else if (gamepad2.y){
                 robotnav.diaganolFrontRight(SPEED);
             }
@@ -73,9 +83,11 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad2.right_bumper){
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,10000);
             }
+            */
            else {
                 robotnav.stopMotor();
             }
+
         }
     }
 }
