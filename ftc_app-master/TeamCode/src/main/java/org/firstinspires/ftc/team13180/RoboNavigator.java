@@ -155,6 +155,29 @@ public class RoboNavigator {
         rearr.setPower(PosP);
         //ask rg if any questions
     }
+    public void AngAccMecanum(double angle,double mult, double turn){
+
+        /*following 2 methods just plot angle on sin function sin(angle- 1/4pi) for back left and top right wheels
+        &   sin(angle+1/4pi) for top left and back right wheels power
+        functions just have an output of what power should be
+        That is for left joystick
+        */
+        double PosP=getUnitCirclePos(angle,mult);
+        double NegP=getUnitCircleNeg(angle,mult);
+        //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles
+        PosP+=turn;
+        NegP+=turn;
+        if(Math.abs(PosP)>1 || Math.abs(NegP)>1){
+            PosP=PosP/(Math.max(PosP,NegP));
+            NegP=NegP/(Math.max(PosP,NegP));
+            //maintains proportion between both
+        }
+        topl.setPower(PosP);
+        rearl.setPower(NegP);
+        topr.setPower(NegP);
+        rearr.setPower(PosP);
+        //ask rg if any questions
+    }
     private double getUnitCircleNeg(double angle,double mult){
         double p=Math.sin(angle-(0.25*Math.PI));
         return p*mult;

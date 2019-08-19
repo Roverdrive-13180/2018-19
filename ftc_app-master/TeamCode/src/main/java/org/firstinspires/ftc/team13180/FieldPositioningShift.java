@@ -19,13 +19,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.util.Locale;
-@TeleOp(name="FieldPositioning", group="manualmode")
-public class FieldPositioning extends LinearOpMode {
+@TeleOp(name="FieldPositioningShift", group="manualmode")
+public class FieldPositioningShift extends LinearOpMode {
     private RoboNavigator robonav;
     BNO055IMU imu;
     Orientation pos;
     double Turnpower=0.9;
-    double MovePower=0.6;
+    double MovePower=0.5;
     final double JoystickMargin=10;
     @Override
     public void runOpMode(){
@@ -46,41 +46,38 @@ public class FieldPositioning extends LinearOpMode {
             double y=gamepad1.left_stick_y;
             if(Math.abs(x)>0 || Math.abs(y)>0) {          //when direction inputted
                 double res = robonav.getAngle(x, y); //gets principal angle of joystick
-                double mult=Math.sqrt(x*x+y*y);
-                if (res >= 90) {
-                    res -= 90;
-                }
-                else {
-                    res += 270;
-                }
-                res=360-res;
-                //makes principal angle into actual angle in which joystick was turned
                 pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
                 double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
-                if ((res - JoystickMargin) >= cur || cur >= (res + JoystickMargin)) {    // if robot hasn't turned till the right position yet (+- some margin)
-                    RoboNavigator.DIRECTION Direction = RoboNavigator.DIRECTION.TURN_LEFT; //initalizes direction for encoderdrive to left
-                    double TurnAng = 0; //initializes angle to 0
-                    if (res > cur) {
-                        double tRight = res - cur;
-                        double tLeft = (360 - res) + (cur);
-                        Direction = (tRight <= tLeft) ? RoboNavigator.DIRECTION.TURN_RIGHT : RoboNavigator.DIRECTION.TURN_LEFT;
-                        TurnAng = (tRight <= tLeft) ? tRight : tLeft;
-                    } else if (cur > res) {
-                        double tLeft = cur - res;
-                        double tRight = (360 - cur) + res;
-                        Direction = (tRight <= tLeft) ? RoboNavigator.DIRECTION.TURN_RIGHT : RoboNavigator.DIRECTION.TURN_LEFT;
-                        TurnAng = (tRight <= tLeft) ? tRight : tLeft;
-                    }
-                    // code above finds out which direction is best to turn in left or right, and if so how much
-                    robonav.encoderDrive(Direction, Turnpower, TurnAng, 10000); //inputs acquired angles into encoderdrive, turns exactly to the point where it should
-                }
-                robonav.moveForward(MovePower*mult); //goes forward till gamepad joystick is let go
+                double mult=Math.sqrt(x*x+y*y);
+                double ang=ImuToPrincipal(cur);
+                double finalangle=ReceiveDifference(ang,res);
+                robonav.AngAccMecanum(finalangle,mult,0);
+
+
             }
         }
 
     }
-
-
+    double ImuToPrincipal(double ang){
+        ang=360-ang;
+        if(ang>270){
+            ang-=270;
+        }
+        else{
+            ang+=90;
+        }
+        return ang;
+    }
+    double ReceiveDifference(double CurPos,double FinPos){
+        if(CurPos>FinPos){
+            CurPos-=FinPos;
+        }
+        else{
+            double diff=FinPos;
+            CurPos+=FinPos;
+        }
+        return CurPos;
+    }
     String formatAngle(AngleUnit angUnit, double angle) {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angUnit, angle));
     }

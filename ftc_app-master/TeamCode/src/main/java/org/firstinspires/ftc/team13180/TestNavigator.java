@@ -10,7 +10,7 @@ public class TestNavigator extends LinearOpMode {
 
     private RoboNavigator robotnav;
 
-    static final double SPEED = 0.5;
+    static final double SPEED = 0.6;
 
     @Override
     public void runOpMode() {
