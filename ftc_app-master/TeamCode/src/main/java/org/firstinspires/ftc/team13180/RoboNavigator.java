@@ -107,7 +107,7 @@ public class RoboNavigator {
         topl.setPower(.25*-abs(power));
         rearr.setPower(.25*-abs(power));
     }
-    public void AccMecanum(double x,double y,double turn){
+    public double getAngle(double x,double y){
         /*
         atan is arctangent (inverse tangent). "angle" is the reference angle of the direction joystick is facing
         following 3 if else statements get the total principal angle depending on which quadrant the joystick is pointed in
@@ -122,21 +122,26 @@ public class RoboNavigator {
         }
         else if(x>0 && y<0) {
             angle = 360 - angle;
-        }                                                                    //           / |
-        angle=Math.toRadians(angle);                                    //               /  |  y
+        }
+        return Math.toRadians(angle);
+
+    }
+    public void AccMecanum(double x,double y,double turn){
+                                                                             //           / |
+                                                                        //               /  |  y
         double mult=Math.sqrt(x*x+y*y); //hypotenuse of triangle formed by joystick x&y /___|
                                                                        //                 x
-        //also magnitude which is a multiplier for how fast robot will go
-        /*
+        /*also magnitude  is a multiplier for how fast robot will go
+
         following 2 methods just plot angle on sin function sin(angle- 1/4pi) for back left and top right wheels
         &   sin(angle+1/4pi) for top left and back right wheels power
         functions just have an output of what power should be
         That is for left joystick
         */
-
+        double angle=getAngle(x,y);
         double PosP=getUnitCirclePos(angle,mult);
         double NegP=getUnitCircleNeg(angle,mult);
-        //turn is meant for right joystick, can add turn in the middle of a shift to avoid obstacles
+        //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles
         PosP+=turn;
         NegP+=turn;
         if(Math.abs(PosP)>1 || Math.abs(NegP)>1){
