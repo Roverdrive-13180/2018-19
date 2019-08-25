@@ -10,7 +10,7 @@ public class TestNavigator extends LinearOpMode {
 
     private RoboNavigator robotnav;
 
-    static final double SPEED = 0.6;
+    static final double SPEED = 0.2;
 
     @Override
     public void runOpMode() {
@@ -34,10 +34,10 @@ public class TestNavigator extends LinearOpMode {
                 robotnav.moveBackward(SPEED*ry*-1);
             }
             else if (rx>0 && rx>Math.abs(ry)) {
-                robotnav.shiftRight(SPEED* rx);
+                robotnav.shiftLeft(SPEED* rx);
             }
             else if (rx<0 && Math.abs(rx)>Math.abs(ry)) {
-                robotnav.shiftLeft(SPEED*rx*-1);
+                robotnav.shiftRight(SPEED*rx*-1);
             }
             else if (gamepad1.right_bumper) {
                 robotnav.turnLeft(SPEED);
@@ -47,7 +47,7 @@ public class TestNavigator extends LinearOpMode {
             }
 
             else if(Math.abs(r2x)>0 || Math.abs(r2y)>0){   //can go any direction 360 degrees based on controller input
-                robotnav.AccMecanum(r2x,r2y,turn);
+                robotnav.AccMecanum(r2x,r2y,0);
             }
             /*
             else if (gamepad2.y){

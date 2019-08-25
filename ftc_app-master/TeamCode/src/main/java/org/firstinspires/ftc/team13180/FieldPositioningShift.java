@@ -48,6 +48,7 @@ public class FieldPositioningShift extends LinearOpMode {
                 double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
                 pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
                 double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
+                cur*=-1;
                 double mult=Math.sqrt(x*x+y*y);
                 double ang=ImuToPrincipal(cur);
                 double finalangle=ReceiveDifference(ang,res);

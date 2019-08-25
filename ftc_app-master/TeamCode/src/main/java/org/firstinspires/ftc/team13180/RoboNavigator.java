@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.team13180;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -113,8 +114,9 @@ public class RoboNavigator {
         following 3 if else statements get the total principal angle depending on which quadrant the joystick is pointed in
         **EVERYTHING IS IN RADIANS**
         */
-        double angle=Math.atan(y/x);
-        if(x<0 && y<0) {
+        return Math.atan2(y,x);
+//        double angle=Math.atan2(y,x);
+/*        if(x<0 && y<0) {
             angle += 180;
         }
         else if(x<0 && y>0){
@@ -123,7 +125,8 @@ public class RoboNavigator {
         else if(x>0 && y<0) {
             angle = 360 - angle;
         }
-        return Math.toRadians(angle);
+        */
+  //      return Math.toRadians(angle);
 
     }
     public void AccMecanum(double x,double y,double turn){
@@ -139,6 +142,7 @@ public class RoboNavigator {
         That is for left joystick
         */
         double angle=getAngle(x,y);
+        opMode.telemetry.addData("Angle",angle);
         double PosP=getUnitCirclePos(angle,mult);
         double NegP=getUnitCircleNeg(angle,mult);
         //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles
@@ -149,10 +153,16 @@ public class RoboNavigator {
             NegP=NegP/(Math.max(PosP,NegP));
             //maintains proportion between both
         }
+        topl.setPower(NegP);
+        rearl.setPower(PosP);
+        topr.setPower(PosP);
+        rearr.setPower(NegP);
+        /*
         topl.setPower(PosP);
         rearl.setPower(NegP);
         topr.setPower(NegP);
         rearr.setPower(PosP);
+        */
         //ask rg if any questions
     }
     public void AngAccMecanum(double angle,double mult, double turn){
