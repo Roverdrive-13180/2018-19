@@ -37,7 +37,7 @@ public class FieldPositioning extends LinearOpMode {
         param.calibrationDataFile = "BNO055IMUCalibration.json";
         param.loggingEnabled      = true;
         param.loggingTag          = "IMU";
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu123");
         imu.initialize(param);
         waitForStart();
         while (opModeIsActive()){
@@ -45,7 +45,7 @@ public class FieldPositioning extends LinearOpMode {
             double x=gamepad1.left_stick_x;
             double y=gamepad1.left_stick_y;
             if(Math.abs(x)>0 || Math.abs(y)>0) {          //when direction inputted
-                double res = robonav.getAngle(x, y); //gets principal angle of joystick
+                double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
                 double mult=Math.sqrt(x*x+y*y);
                 if (res >= 90) {
                     res -= 90;

@@ -37,7 +37,7 @@ public class FieldPositioningShift extends LinearOpMode {
         param.calibrationDataFile = "BNO055IMUCalibration.json";
         param.loggingEnabled      = true;
         param.loggingTag          = "IMU";
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu123");
         imu.initialize(param);
         waitForStart();
         while (opModeIsActive()){
@@ -45,12 +45,13 @@ public class FieldPositioningShift extends LinearOpMode {
             double x=gamepad1.left_stick_x;
             double y=gamepad1.left_stick_y;
             if(Math.abs(x)>0 || Math.abs(y)>0) {          //when direction inputted
-                double res = robonav.getAngle(x, y); //gets principal angle of joystick
+                double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
                 pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
                 double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
                 double mult=Math.sqrt(x*x+y*y);
                 double ang=ImuToPrincipal(cur);
                 double finalangle=ReceiveDifference(ang,res);
+                finalangle=Math.toRadians(finalangle);
                 robonav.AngAccMecanum(finalangle,mult,0);
 
 
@@ -71,12 +72,15 @@ public class FieldPositioningShift extends LinearOpMode {
     double ReceiveDifference(double CurPos,double FinPos){
         if(CurPos>FinPos){
             CurPos-=FinPos;
+            CurPos=ImuToPrincipal(CurPos);
+            return CurPos;
         }
         else{
-            double diff=FinPos;
-            CurPos+=FinPos;
+            FinPos-=CurPos;
+            FinPos=360-FinPos;
+            FinPos=ImuToPrincipal(FinPos);
+            return FinPos;
         }
-        return CurPos;
     }
     String formatAngle(AngleUnit angUnit, double angle) {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angUnit, angle));
