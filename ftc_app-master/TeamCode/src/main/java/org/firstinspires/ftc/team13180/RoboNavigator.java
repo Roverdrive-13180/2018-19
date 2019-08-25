@@ -16,7 +16,7 @@ import static java.lang.Math.abs;
 
 public class RoboNavigator {
 
-    private LinearOpMode opMode;
+    public LinearOpMode opMode;
 
     private DcMotor topl;
     private DcMotor topr;
@@ -114,7 +114,7 @@ public class RoboNavigator {
         following 3 if else statements get the total principal angle depending on which quadrant the joystick is pointed in
         **EVERYTHING IS IN RADIANS**
         */
-        return Math.atan2(y,x);
+        return -1*Math.atan2(y,x);
 //        double angle=Math.atan2(y,x);
 /*        if(x<0 && y<0) {
             angle += 180;
@@ -129,6 +129,14 @@ public class RoboNavigator {
   //      return Math.toRadians(angle);
 
     }
+    public void AnyMecanum(double x,double y){
+        double power = Math.sqrt(x * x + y * y);
+        topr.setPower((x+y)/power);
+        topl.setPower((y-x)/power);
+        rearr.setPower((y-x)/power);
+        rearl.setPower((x+y)/power);
+    }
+
     public void AccMecanum(double x,double y,double turn){
                                                                              //           / |
                                                                         //               /  |  y
@@ -142,7 +150,7 @@ public class RoboNavigator {
         That is for left joystick
         */
         double angle=getAngle(x,y);
-        opMode.telemetry.addData("Angle",angle);
+        angle=Math.toRadians(angle);
         double PosP=getUnitCirclePos(angle,mult);
         double NegP=getUnitCircleNeg(angle,mult);
         //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles

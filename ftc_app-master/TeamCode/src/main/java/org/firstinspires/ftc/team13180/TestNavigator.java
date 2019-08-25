@@ -47,7 +47,7 @@ public class TestNavigator extends LinearOpMode {
             }
 
             else if(Math.abs(r2x)>0 || Math.abs(r2y)>0){   //can go any direction 360 degrees based on controller input
-                robotnav.AccMecanum(r2x,r2y,0);
+                robotnav.AnyMecanum(r2x,r2y);
             }
             /*
             else if (gamepad2.y){

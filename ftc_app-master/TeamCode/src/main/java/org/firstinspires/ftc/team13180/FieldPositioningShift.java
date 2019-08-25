@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.team13180;
-
+//Made by Rohan Gulati -8/25/19
 import android.renderscript.ScriptGroup;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -22,6 +22,7 @@ import java.util.Locale;
 @TeleOp(name="FieldPositioningShift", group="manualmode")
 public class FieldPositioningShift extends LinearOpMode {
     private RoboNavigator robonav;
+    private LinearOpMode opMode;
     BNO055IMU imu;
     Orientation pos;
     double Turnpower=0.9;
@@ -44,23 +45,37 @@ public class FieldPositioningShift extends LinearOpMode {
             telemetry.update();
             double x=gamepad1.left_stick_x;
             double y=gamepad1.left_stick_y;
-            if(Math.abs(x)>0 || Math.abs(y)>0) {          //when direction inputted
+            if(gamepad1.left_bumper){
+                robonav.turnLeft(0.4);
+
+            }
+            else if(gamepad1.right_bumper){
+                robonav.turnRight(0.4);
+            }
+            else if(Math.abs(x)>0.1 || Math.abs(y)>0.1) {          //when direction inputted
                 double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
                 pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
                 double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
-                cur*=-1;
                 double mult=Math.sqrt(x*x+y*y);
                 double ang=ImuToPrincipal(cur);
                 double finalangle=ReceiveDifference(ang,res);
                 finalangle=Math.toRadians(finalangle);
-                robonav.AngAccMecanum(finalangle,mult,0);
+                robonav.opMode.telemetry.addData ("current", "shiftRight (power=%f)", ang);
+                robonav.opMode.telemetry.addData ("joystick:", "shiftRight (power=%f)", res);
+                robonav.opMode.telemetry.addData ("difference:", "shiftRight (power=%f)", finalangle);
+                robonav.AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
 
 
+            }
+            else {
+                robonav.stopMotor();
             }
         }
 
     }
     double ImuToPrincipal(double ang){
+        return ang+90;
+        /*
         ang=360-ang;
         if(ang>270){
             ang-=270;
@@ -69,6 +84,7 @@ public class FieldPositioningShift extends LinearOpMode {
             ang+=90;
         }
         return ang;
+ */
     }
     double ReceiveDifference(double CurPos,double FinPos){
         if(CurPos>FinPos){
