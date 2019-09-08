@@ -52,7 +52,7 @@ public class FieldPositioningShift extends LinearOpMode {
             else if(gamepad1.right_bumper){
                 robonav.turnRight(0.4);
             }
-            else if(Math.abs(x)>0.1 || Math.abs(y)>0.1) {          //when direction inputted
+            else if(Math.abs(x)>0.15 || Math.abs(y)>0.15) {          //when direction inputted
                 double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
                 pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
                 double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
