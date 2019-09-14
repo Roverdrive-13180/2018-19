@@ -83,7 +83,7 @@ public class Autonomous_Depot extends LinearOpMode {
            grabber.spinOut();
 
            // Move back
-           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,20,10000);
+           robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATER_POWER,40,10000);
            sleep(1000);
            grabber.stopGrabber();
 
