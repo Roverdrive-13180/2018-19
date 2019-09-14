@@ -1,11 +1,11 @@
 //Made by Rohan Gulati and a little bit from Shivy
-package org.firstinspires.ftc.team13180;
+package org.firstinspires.ftc.team13180s3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.team13180.RoboNavigator;
+import org.firstinspires.ftc.team13180s3.RoboNavigator;
 
 import java.util.List;
 
